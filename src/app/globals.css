@@ -245,6 +245,8 @@ body {
 
 .status-buy,
 .status-neutral,
+.status-closed,
+.status-training,
 .signal-pill,
 .skill-chip {
   border: 1px solid currentColor;
@@ -261,8 +263,13 @@ body {
   color: var(--positive);
 }
 
-.status-neutral {
+.status-neutral,
+.status-training {
   color: var(--cyber-blue);
+}
+
+.status-closed {
+  color: var(--negative);
 }
 
 .skill-chip {

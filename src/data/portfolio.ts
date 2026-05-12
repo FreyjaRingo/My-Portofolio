@@ -71,7 +71,7 @@ export const portfolioData = {
       company: "SeaMoney - Shopee & SeaBank",
       period: "Sep 2025 - Jan 2026",
       status: "CLOSED",
-      side: "BUY",
+      side: "HOLD",
       descriptions: [
         "Running campaigns for SeaBank and ShopeePay adoption among students.",
         "Promoting fintech products through social media and campus activities.",

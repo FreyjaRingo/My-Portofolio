@@ -24,6 +24,15 @@ const panelIn = {
   visible: { opacity: 1, y: 0 },
 };
 
+const statusClassMap: Record<string, string> = {
+  LIVE: "status-buy",
+  CLOSED: "status-closed",
+  TRAINING: "status-training",
+};
+
+const getStatusClass = (status: string) =>
+  statusClassMap[status.trim().toUpperCase()] ?? "status-neutral";
+
 export default function Home() {
   return (
     <main className="terminal-shell min-h-screen bg-[var(--background)] text-[var(--foreground)]">
@@ -280,11 +289,7 @@ export default function Home() {
                     <td>{item.period}</td>
                     <td>
                       <span
-                        className={
-                          item.side === "BUY"
-                            ? "status-buy"
-                            : "status-neutral"
-                        }
+                        className={getStatusClass(item.status)}
                       >
                         {item.status}
                       </span>
