@@ -1,77 +1,290 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050a05; /* Sangat gelap, pekat hacker */
-  --foreground: #b9ccb2;
-  --terminal-green: #00ff41;
-  --terminal-green-dim: #00e639;
-  --cyber-blue: #00f0ff;
-  --surface: #0a120a;
-  --surface-border: #1a2e1a;
+  --font-jetbrains-mono: "JetBrains Mono", "Cascadia Mono", Consolas, "Liberation Mono";
+  --background: #040404;
+  --foreground: #d8d0bd;
+  --muted: #8f8878;
+  --surface: #11100d;
+  --surface-2: #171510;
+  --surface-border: #343024;
+  --panel-header: #161204;
+  --terminal-amber: #ffb000;
+  --terminal-orange: #ff6b00;
+  --positive: #27d77c;
+  --negative: #ff4545;
+  --cyber-blue: #00d7ff;
+  --jp-pink: #ff4faf;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-terminal-green: var(--terminal-green);
-  --color-cyber-blue: var(--cyber-blue);
-  --color-surface: var(--surface);
-  --color-surface-border: var(--surface-border);
   --font-mono: var(--font-jetbrains-mono), monospace;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: var(--background);
-  background-image: 
-      linear-gradient(to right, rgba(0, 255, 65, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
-  background-size: 24px 24px;
+  margin: 0;
+  background:
+    radial-gradient(circle at 80% 0%, rgba(255, 79, 175, 0.14), transparent 28rem),
+    radial-gradient(circle at 0% 20%, rgba(255, 176, 0, 0.12), transparent 26rem),
+    linear-gradient(to right, rgba(255, 176, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 176, 0, 0.03) 1px, transparent 1px),
+    var(--background);
+  background-size: auto, auto, 28px 28px, 28px 28px, auto;
   color: var(--foreground);
   font-family: var(--font-mono);
 }
 
-/* Custom Scrollbar for Hacker Theme */
+::selection {
+  background: var(--terminal-amber);
+  color: #000;
+}
+
 ::-webkit-scrollbar {
+  height: 8px;
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--background);
-  border-left: 1px solid var(--surface-border);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--surface-border);
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--terminal-green);
+  background: var(--terminal-amber);
 }
 
-.hazard-stripes {
+.terminal-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.terminal-shell::before {
   background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(0, 255, 65, 0.2) 10px,
-      rgba(0, 255, 65, 0.2) 20px
+    to bottom,
+    rgba(255, 255, 255, 0.03) 0,
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px,
+    transparent 4px
   );
-}
-
-.scanline {
-  width: 100%;
-  height: 100px;
-  z-index: 9999;
-  position: absolute;
+  content: "";
+  inset: 0;
+  opacity: 0.25;
   pointer-events: none;
-  background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 255, 65, 0.1) 10%,
-      rgba(0, 0, 0, 0) 100%
-  );
-  opacity: 0.1;
-  animation: scanline 8s linear infinite;
+  position: fixed;
+  z-index: 70;
 }
 
-@keyframes scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
+.terminal-panel {
+  background:
+    linear-gradient(135deg, rgba(255, 176, 0, 0.06), transparent 22rem),
+    var(--surface);
+}
+
+.terminal-card {
+  background: var(--surface-2);
+  border: 1px solid var(--surface-border);
+}
+
+.jp-card {
+  background:
+    linear-gradient(135deg, rgba(255, 79, 175, 0.16), transparent 60%),
+    var(--surface-2);
+}
+
+.terminal-chip {
+  border: 1px solid var(--surface-border);
+  display: inline-flex;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.55rem;
+}
+
+.market-tab {
+  border: 1px solid transparent;
+  color: var(--foreground);
+  flex: 0 0 auto;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.45rem 0.7rem;
+  transition: 160ms ease;
+}
+
+.market-tab:hover {
+  background: var(--terminal-amber);
+  border-color: var(--terminal-amber);
+  color: #000;
+}
+
+.ticker-tape {
+  background: #090806;
+  color: var(--foreground);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-track {
+  animation: ticker 28s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+.ticker-item {
+  align-items: center;
+  border-right: 1px solid var(--surface-border);
+  display: inline-flex;
+  gap: 0.55rem;
+  padding: 0.45rem 1rem;
+}
+
+.stat-cell,
+.skill-panel,
+.project-row {
+  background: var(--surface);
+  padding: 1.25rem;
+}
+
+.action-cell {
+  align-items: center;
+  background: var(--terminal-amber);
+  color: #000;
+  display: inline-flex;
+  font-size: 0.75rem;
+  font-weight: 900;
+  gap: 0.5rem;
+  justify-content: center;
+  min-height: 4.5rem;
+  padding: 1rem 1.25rem;
+  text-transform: uppercase;
+  transition: 160ms ease;
+}
+
+.action-cell:hover {
+  background: var(--jp-pink);
+  color: #fff;
+}
+
+.terminal-title {
+  align-items: center;
+  border-bottom: 1px solid var(--surface-border);
+  display: flex;
+  font-size: 0.75rem;
+  font-weight: 900;
+  gap: 0.5rem;
+  letter-spacing: 0.12em;
+  padding-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.quote-row {
+  align-items: flex-start;
+  border-bottom: 1px solid var(--surface-border);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+}
+
+.quote-row span {
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+.quote-row strong {
+  color: #fff;
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.heat-cell {
+  background: var(--surface);
+  color: var(--terminal-amber);
+  font-size: 0.75rem;
+  font-weight: 900;
+  padding: 1rem;
+  text-align: center;
+}
+
+.market-table {
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  min-width: 920px;
+  width: 100%;
+}
+
+.market-table th {
+  background: var(--panel-header);
+  color: var(--muted);
+  font-weight: 700;
+  padding: 0.8rem 1rem;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.market-table td {
+  border-top: 1px solid var(--surface-border);
+  padding: 1rem;
+  vertical-align: top;
+}
+
+.market-table tr:hover td {
+  background: rgba(255, 176, 0, 0.06);
+}
+
+.status-buy,
+.status-neutral,
+.signal-pill,
+.skill-chip {
+  border: 1px solid currentColor;
+  display: inline-flex;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.45rem;
+  text-transform: uppercase;
+}
+
+.status-buy,
+.signal-pill {
+  color: var(--positive);
+}
+
+.status-neutral {
+  color: var(--cyber-blue);
+}
+
+.skill-chip {
+  color: var(--foreground);
+}
+
+.skill-chip:hover {
+  color: var(--terminal-amber);
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 640px) {
+  .market-table {
+    min-width: 760px;
+  }
 }

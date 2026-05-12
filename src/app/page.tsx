@@ -1,255 +1,453 @@
 "use client";
 
+import {
+  Activity,
+  ArrowUpRight,
+  BadgeJapaneseYen,
+  BarChart3,
+  BriefcaseBusiness,
+  CandlestickChart,
+  Download,
+  GraduationCap,
+  Languages,
+  Mail,
+  Radio,
+  Sparkles,
+  Terminal,
+} from "lucide-react";
 import { motion } from "framer-motion";
-import { Terminal, ShieldAlert } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import type { ReactNode } from "react";
 import { portfolioData } from "@/data/portfolio";
 
+const panelIn = {
+  hidden: { opacity: 0, y: 14 },
+  visible: { opacity: 1, y: 0 },
+};
+
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
   return (
-    <div className="bg-[var(--background)] text-[var(--foreground)] font-mono min-h-screen flex flex-col relative overflow-hidden">
-      {/* Decorative Telemetry */}
-      <div className="fixed top-20 left-4 text-[10px] text-[var(--surface-border)] opacity-50 z-0 pointer-events-none tracking-widest" style={{ writingMode: "vertical-rl" }}>
-        SYS_ADMIN_OS // ACCESS_GRANTED // SCANNING
-      </div>
-      <div className="fixed bottom-20 right-8 text-[10px] text-[var(--cyber-blue)] opacity-40 z-0 pointer-events-none flex flex-col gap-1 text-right">
-        <span>FRAME_RATE: 144Hz</span>
-        <span>NEURAL_LINK: OPTIMAL</span>
-        <span>[HACKER_MODE: ACTIVE]</span>
-      </div>
-
-      {/* Top App Bar */}
-      <header className="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-2 bg-[var(--surface)] border-b border-[var(--surface-border)] text-xs uppercase">
-        <div className="flex items-center gap-4 relative">
-          <div className="absolute -top-1 left-0 w-full h-[3px] hazard-stripes"></div>
-          <span className="font-bold text-[var(--terminal-green)] text-base group cursor-default">
-            ATHALLAH_SYS <span className="opacity-50">v2.0</span>
-          </span>
-          <nav className="hidden md:flex gap-6 ml-8">
-            <a href="#hero" className="text-[var(--terminal-green)] border-b border-[var(--terminal-green)] pb-1 hover:text-white transition-colors">ST_01_BOOT</a>
-            <a href="#experience" className="text-[var(--foreground)] hover:text-[var(--terminal-green)] transition-colors pb-1">ST_02_EXP</a>
-            <a href="#projects" className="text-[var(--foreground)] hover:text-[var(--terminal-green)] transition-colors pb-1">ST_03_PRJ</a>
-            <a href="#skills" className="text-[var(--foreground)] hover:text-[var(--cyber-blue)] transition-colors pb-1">ST_04_SKL</a>
+    <main className="terminal-shell min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+      <header className="sticky top-0 z-50 border-b border-[var(--surface-border)] bg-[var(--background)]/95 backdrop-blur">
+        <div className="flex min-h-12 flex-col border-b border-[var(--surface-border)] lg:flex-row lg:items-center">
+          <div className="flex items-center gap-3 border-b border-[var(--surface-border)] px-4 py-3 lg:w-[360px] lg:border-b-0 lg:border-r">
+            <CandlestickChart className="h-5 w-5 text-[var(--terminal-amber)]" />
+            <div>
+              <p className="text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
+                Bloomberg-inspired personal terminal
+              </p>
+              <p className="text-sm font-bold text-white">
+                {portfolioData.personal.ticker} / PORTFOLIO MONITOR
+              </p>
+            </div>
+          </div>
+          <nav className="flex flex-1 items-center gap-1 overflow-x-auto px-2 py-2 text-[11px] uppercase">
+            {["Overview", "Experience", "Projects", "Skills", "Education"].map(
+              (item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  className="market-tab"
+                >
+                  {item}
+                </a>
+              ),
+            )}
           </nav>
+          <div className="hidden border-l border-[var(--surface-border)] px-4 py-3 text-right text-xs lg:block">
+            <p className="text-[var(--muted)]">SESSION</p>
+            <p className="font-bold text-[var(--positive)]">LIVE / ASIA-JKT</p>
+          </div>
         </div>
-        <div className="flex items-center gap-4">
-          <button className="text-[var(--cyber-blue)] border border-[var(--cyber-blue)] hover:bg-[var(--cyber-blue)] hover:text-[var(--background)] px-4 py-1 transition-all duration-300">
-            ROOT_ACCESS
-          </button>
+
+        <div className="ticker-tape text-[11px] uppercase">
+          <div className="ticker-track">
+            {[...portfolioData.terminalTape, ...portfolioData.terminalTape].map(
+              (item, index) => (
+                <span key={`${item.label}-${index}`} className="ticker-item">
+                  <span className="text-[var(--muted)]">{item.label}</span>
+                  <span className="text-white">{item.value}</span>
+                  <span className="text-[var(--positive)]">{item.trend}</span>
+                </span>
+              ),
+            )}
+          </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col p-4 pt-16 lg:pl-16 lg:pr-16 relative z-10 max-w-7xl mx-auto w-full">
-        
-        {/* Ticker Tape */}
-        <div className="w-full bg-[var(--surface)] border-y border-[var(--surface-border)] text-[var(--terminal-green-dim)] text-[11px] py-1 mb-6 overflow-hidden relative">
-          <div className="absolute left-0 top-0 h-full w-2 hazard-stripes"></div>
-          <div className="whitespace-nowrap flex animate-[scanline_10s_linear_infinite] px-4 overflow-hidden">
-             <span className="mr-8">[PYTHON] <span className="text-[var(--cyber-blue)]">ACTIVE</span></span>
-             <span className="mr-8">[DATA SCIENCE] <span className="text-[var(--cyber-blue)]">OPTIMAL</span></span>
-             <span className="mr-8">[AI] <span className="text-white">PROCESSING</span></span>
-             <span className="mr-8">[SQL] <span className="text-[var(--terminal-green)]">100%</span></span>
-             <span className="mr-8">[MACHINE LEARNING] <span className="text-[var(--terminal-green)]">+5.2%</span></span>
-          </div>
-        </div>
-
-        {/* Hero Section */}
-        <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          id="hero"
-          className="relative border border-[var(--surface-border)] bg-[var(--surface)] mb-6 flex flex-col md:flex-row p-6 md:p-10 group overflow-hidden"
+      <section
+        id="overview"
+        className="grid gap-px bg-[var(--surface-border)] p-px lg:grid-cols-[1.35fr_0.65fr]"
+      >
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={panelIn}
+          transition={{ duration: 0.4 }}
+          className="terminal-panel min-h-[560px] p-5 md:p-8"
         >
-          {/* Decorative Corner Marks */}
-          <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[var(--terminal-green)]"></div>
-          <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[var(--terminal-green)]"></div>
-          <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[var(--terminal-green)]"></div>
-          <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[var(--terminal-green)]"></div>
-
-          {/* Background Watermark */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none overflow-hidden select-none">
-            <span className="text-[12rem] font-bold text-[var(--terminal-green)] whitespace-nowrap transform -rotate-12">SYSTEM_ROOT</span>
+          <div className="mb-8 flex flex-wrap items-center gap-2 text-[11px] uppercase">
+            <span className="terminal-chip bg-[var(--terminal-amber)] text-black">
+              Equity Research Note
+            </span>
+            <span className="terminal-chip">Data desk active</span>
+            <span className="terminal-chip text-[var(--jp-pink)]">
+              オタク・マーケット
+            </span>
           </div>
 
-          <div className="relative z-10 flex flex-col gap-4 flex-1">
-            <div className="text-[10px] text-[var(--cyber-blue)] border border-[var(--cyber-blue)] px-1 w-max opacity-80 mb-2">IDENTIFICATION_PROTO</div>
-            
-            <div className="border-l-2 border-[var(--terminal-green)] pl-4 py-2 bg-[var(--terminal-green)]/10 relative">
-              <h1 className="text-2xl md:text-4xl text-[var(--terminal-green)] font-bold mb-2 flex items-center gap-2">
-                <span className="w-3 h-3 bg-[var(--terminal-green)] inline-block animate-pulse"></span>
+          <div className="grid gap-8 xl:grid-cols-[1fr_280px]">
+            <div>
+              <p className="mb-3 text-xs uppercase tracking-[0.32em] text-[var(--terminal-amber)]">
+                {portfolioData.personal.alias}
+              </p>
+              <h1 className="max-w-5xl text-4xl font-black uppercase leading-[0.95] text-white md:text-6xl xl:text-7xl">
                 {portfolioData.personal.name}
               </h1>
-              <h2 className="text-sm md:text-base text-[var(--foreground)] opacity-90">
-                &gt; ROLE: {portfolioData.personal.role}
-              </h2>
+              <p className="mt-4 max-w-3xl text-base leading-7 text-[var(--foreground)] md:text-lg">
+                {portfolioData.personal.summary}
+              </p>
             </div>
 
-            <div className="mt-4 text-sm text-[var(--foreground)] opacity-80 max-w-2xl leading-relaxed space-y-2">
-              <p>&gt; <span className="text-white">STATUS:</span> {portfolioData.personal.status}</p>
-              <p>&gt; <span className="text-white">CURRENT_THREAD:</span> {portfolioData.personal.currentThread}</p>
-            </div>
-
-            <div className="mt-6 flex flex-wrap gap-4 text-sm">
-              <a href={portfolioData.personal.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-[var(--background)] border border-[var(--cyber-blue)] text-[var(--cyber-blue)] px-6 py-2 hover:bg-[var(--cyber-blue)] hover:text-black transition-all shadow-[2px_2px_0px_var(--cyber-blue)]">
-                <Terminal size={14} /> CONNECT_LINKEDIN
-              </a>
-              <a href={`mailto:${portfolioData.personal.email}`} className="flex items-center gap-2 border border-[var(--surface-border)] px-6 py-2 hover:bg-[var(--surface-border)] hover:text-[var(--terminal-green)] transition-all">
-                <ShieldAlert size={14} /> PING_EMAIL
-              </a>
+            <div className="terminal-card jp-card">
+              <div className="flex items-center justify-between border-b border-[var(--surface-border)] pb-3">
+                <div>
+                  <p className="text-[11px] uppercase text-[var(--muted)]">
+                    Language Alpha
+                  </p>
+                  <p className="font-bold text-white">JLPT N2 Certified</p>
+                </div>
+                <Languages className="h-5 w-5 text-[var(--jp-pink)]" />
+              </div>
+              <div className="py-5">
+                <p className="text-5xl font-black text-[var(--jp-pink)]">
+                  日本語
+                </p>
+                <p className="mt-2 text-sm leading-6 text-[var(--foreground)]">
+                  Japanese-ready operator with an otaku-coded curiosity for
+                  systems, story worlds, and disciplined craft.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-px bg-[var(--surface-border)] text-xs">
+                <div className="bg-[var(--surface)] p-3">
+                  <p className="text-[var(--muted)]">LEVEL</p>
+                  <p className="font-bold text-white">N2</p>
+                </div>
+                <div className="bg-[var(--surface)] p-3">
+                  <p className="text-[var(--muted)]">SIGNAL</p>
+                  <p className="font-bold text-[var(--positive)]">STRONG</p>
+                </div>
+              </div>
             </div>
           </div>
-        </motion.section>
 
-        {/* 2 Column Layout for EXP & PRJ */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          
-          {/* Experience Log */}
-          <motion.section 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            id="experience"
-            className="border border-[var(--surface-border)] bg-[var(--surface)] flex flex-col h-96 relative group"
-          >
-            <header className="bg-[var(--background)] border-b border-[var(--surface-border)] px-4 py-2 flex justify-between items-center text-xs">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-[var(--terminal-green)] inline-block"></span>
-                <span className="text-[var(--terminal-green)] font-bold">EXP_LOG.sys</span>
+          <div className="mt-8 grid gap-px bg-[var(--surface-border)] sm:grid-cols-2 xl:grid-cols-4">
+            {portfolioData.kpis.map((kpi) => (
+              <div key={kpi.label} className="stat-cell">
+                <p className="text-[11px] uppercase text-[var(--muted)]">
+                  {kpi.label}
+                </p>
+                <p className="mt-2 text-2xl font-black text-white">
+                  {kpi.value}
+                </p>
+                <p className="mt-2 text-xs leading-5 text-[var(--foreground)]">
+                  {kpi.detail}
+                </p>
               </div>
-            </header>
-            <div className="p-4 flex-1 overflow-y-auto text-sm space-y-6">
-              
-              {portfolioData.experience.map((exp) => (
-                <div key={exp.id} className={`border-l ${exp.type === "primary" ? "border-[var(--cyber-blue)]" : "border-[var(--surface-border)]"} pl-4 relative`}>
-                  <div className={`absolute -left-[5px] top-1 w-2 h-2 ${exp.type === "primary" ? "bg-[var(--cyber-blue)]" : "bg-[var(--surface-border)]"}`}></div>
-                  <div className={`flex justify-between items-start mb-1 ${exp.type === "primary" ? "text-[var(--cyber-blue)]" : "text-[var(--foreground)]"}`}>
-                    <span className={`font-bold ${exp.type !== "primary" ? "text-white" : ""}`}>{exp.title}</span>
-                    <span className={`text-[10px] border px-1 ${exp.type === "primary" ? "border-[var(--cyber-blue)]" : "border-[var(--surface-border)] text-[var(--terminal-green)]"}`}>{exp.status}</span>
-                  </div>
-                  <div className="text-xs text-[var(--foreground)] opacity-70 mb-2">@ {exp.company} // [{exp.period}]</div>
-                  <p className="text-[var(--foreground)] opacity-90 whitespace-pre-line text-xs">
-                    {exp.descriptions.map((desc, i) => (
-                      <React.Fragment key={i}>
-                        &gt; {desc}<br/>
-                      </React.Fragment>
-                    ))}
-                  </p>
-                </div>
-              ))}
+            ))}
+          </div>
 
-              <div className="text-[10px] text-[var(--surface-border)] border-b border-[var(--surface-border)] pb-2 mb-4">ORG_LOGS.sys</div>
-
-              {portfolioData.organizations.map((org) => (
-                <div key={org.id} className={`border-l ${org.type === "primary" ? "border-[var(--cyber-blue)]" : "border-[var(--surface-border)]"} pl-4 relative`}>
-                  <div className={`absolute -left-[5px] top-1 w-2 h-2 ${org.type === "primary" ? "bg-[var(--cyber-blue)]" : "bg-[var(--surface-border)]"}`}></div>
-                  <div className={`flex justify-between items-start mb-1 ${org.type === "primary" ? "text-[var(--cyber-blue)]" : "text-[var(--foreground)]"}`}>
-                    <span className={`font-bold ${org.type !== "primary" ? "text-white" : ""}`}>{org.title}</span>
-                    <span className={`text-[10px] border px-1 ${org.type === "primary" ? "border-[var(--cyber-blue)]" : "border-[var(--surface-border)] text-[var(--terminal-green)]"}`}>{org.status}</span>
-                  </div>
-                  <div className="text-xs text-[var(--foreground)] opacity-70 mb-2">@ {org.company} // [{org.period}]</div>
-                  <p className="text-[var(--foreground)] opacity-90 whitespace-pre-line text-xs">
-                    {org.descriptions.map((desc, i) => (
-                      <React.Fragment key={i}>
-                        &gt; {desc}<br/>
-                      </React.Fragment>
-                    ))}
-                  </p>
-                </div>
-              ))}
-
+          <div className="mt-8 grid gap-px bg-[var(--surface-border)] md:grid-cols-[1fr_auto_auto]">
+            <div className="bg-[var(--surface)] p-4">
+              <p className="text-[11px] uppercase text-[var(--muted)]">
+                Current Thread
+              </p>
+              <p className="mt-2 text-sm leading-6 text-white">
+                {portfolioData.personal.currentThread}
+              </p>
             </div>
-          </motion.section>
+            <a
+              href={portfolioData.personal.cv}
+              className="action-cell"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Download className="h-4 w-4" />
+              Download CV
+            </a>
+            <a
+              href={`mailto:${portfolioData.personal.email}`}
+              className="action-cell"
+            >
+              <Mail className="h-4 w-4" />
+              Contact
+            </a>
+          </div>
+        </motion.div>
 
-          {/* Projects Matrix */}
-          <motion.section 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            id="projects"
-            className="border border-[var(--surface-border)] bg-[var(--surface)] flex flex-col h-96 relative group"
-          >
-            <header className="bg-[var(--background)] border-b border-[var(--surface-border)] px-4 py-2 flex justify-between items-center text-xs">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-[var(--cyber-blue)] inline-block"></span>
-                <span className="text-[var(--cyber-blue)] font-bold">PRJ_MATRIX.db</span>
-              </div>
-            </header>
-            <div className="p-4 flex-1 overflow-y-auto">
-              <table className="w-full text-left text-xs border-collapse">
-                <thead>
-                  <tr className="text-[var(--foreground)] border-b border-[var(--surface-border)] opacity-60">
-                    <th className="py-2 font-normal w-8">ID</th>
-                    <th className="py-2 font-normal">CLASSIFICATION</th>
-                    <th className="py-2 font-normal">TECH_STACK</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {portfolioData.projects.map((prj) => (
-                    <tr key={prj.id} className="border-b border-[var(--surface-border)]/50 hover:bg-[var(--surface-border)]/20 transition-colors group/row">
-                      <td className="py-4 text-[var(--cyber-blue)]">{prj.id}</td>
-                      <td className="py-4 text-white">{prj.title}</td>
-                      <td className="py-4 text-[var(--terminal-green)] opacity-80">{prj.stack}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div className="mt-6 border-t border-[var(--surface-border)] pt-4">
-                <div className="flex justify-between text-[10px] text-[var(--foreground)] opacity-60 mb-1">
-                  <span>MEMORY_ALLOCATION</span>
-                  <span className="text-[var(--terminal-green)]">100%</span>
-                </div>
-                <div className="text-[var(--terminal-green)] text-[10px] tracking-[0.2em] flex items-center justify-between">
-                  <span>[|||||||||||||||||||||||||||||]</span>
-                  <span className="border border-[var(--terminal-green)] px-1">SYS_OK</span>
-                </div>
-              </div>
-            </div>
-          </motion.section>
-
-        </div>
-
-        {/* Skills Section (Command Line Style) */}
-        <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          id="skills"
-          className="border border-[var(--surface-border)] bg-[var(--surface)] mb-6 text-sm"
+        <motion.aside
+          initial="hidden"
+          animate="visible"
+          variants={panelIn}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="terminal-panel p-5"
         >
-          <div className="bg-[var(--background)] border-b border-[var(--surface-border)] px-4 py-2 flex items-center gap-2 text-xs">
-            <span className="text-[var(--foreground)]">root@athallah-os:~#</span>
-            <span className="text-white">cat skills.json</span>
+          <div className="terminal-title">
+            <Radio className="h-4 w-4 text-[var(--positive)]" />
+            Market Pulse
           </div>
-          <div className="p-6 text-[var(--foreground)] font-mono space-y-4">
-            <p className="text-[var(--terminal-green)]">&#123;</p>
-            <div className="pl-4 space-y-4">
-              {Object.entries(portfolioData.skills).map(([category, items], idx, arr) => (
-                <div key={category}>
-                  <span className="text-[var(--cyber-blue)]">"{category}"</span>: <span className="text-white">[{items.map(i => `"${i}"`).join(", ")}]</span>{idx < arr.length - 1 ? "," : ""}
+          <div className="mt-5 space-y-3">
+            {[
+              ["FOCUS", "Financial data product strategy"],
+              ["MODEL", "ML, NLP, CV, Decision Support"],
+              ["STACK", "Python, SQL, Streamlit, VBA"],
+              ["LOCATION", portfolioData.personal.location],
+            ].map(([label, value]) => (
+              <div key={label} className="quote-row">
+                <span>{label}</span>
+                <strong>{value}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 terminal-card p-4">
+            <p className="text-xs uppercase text-[var(--terminal-amber)]">
+              Akihabara Watchlist
+            </p>
+            <div className="mt-4 space-y-3 text-sm">
+              {[
+                ["JLPT N2", "Language alpha"],
+                ["Anime literacy", "Culture radar"],
+                ["Data storytelling", "Insight arc"],
+                ["Discipline", "Shonen training loop"],
+              ].map(([name, note]) => (
+                <div
+                  key={name}
+                  className="flex items-center justify-between gap-4 border-b border-[var(--surface-border)] pb-2 last:border-0"
+                >
+                  <span className="text-white">{name}</span>
+                  <span className="text-xs text-[var(--muted)]">{note}</span>
                 </div>
               ))}
             </div>
-            <p className="text-[var(--terminal-green)]">&#125;</p>
-            <div className="mt-4 flex animate-pulse text-[var(--terminal-green)]">
-              _
+          </div>
+
+          <div className="mt-6 grid grid-cols-2 gap-px bg-[var(--surface-border)]">
+            {["Python", "SQL", "NLP", "YOLO", "VBA", "JP-N2"].map((skill) => (
+              <div key={skill} className="heat-cell">
+                {skill}
+              </div>
+            ))}
+          </div>
+        </motion.aside>
+      </section>
+
+      <section className="grid gap-px bg-[var(--surface-border)] p-px xl:grid-cols-[1.15fr_0.85fr]">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={panelIn}
+          id="experience"
+          className="terminal-panel"
+        >
+          <PanelHeader
+            icon={<BriefcaseBusiness className="h-4 w-4" />}
+            label="Experience Blotter"
+            code="EXP"
+          />
+          <div className="overflow-x-auto">
+            <table className="market-table">
+              <thead>
+                <tr>
+                  <th>Ticker</th>
+                  <th>Position</th>
+                  <th>Desk</th>
+                  <th>Period</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {portfolioData.experience.map((item) => (
+                  <tr key={item.id}>
+                    <td className="text-[var(--terminal-amber)]">{item.id}</td>
+                    <td>
+                      <p className="font-bold text-white">{item.title}</p>
+                      <p className="mt-1 max-w-xl text-[11px] leading-5 text-[var(--muted)]">
+                        {item.descriptions.join(" ")}
+                      </p>
+                    </td>
+                    <td>{item.company}</td>
+                    <td>{item.period}</td>
+                    <td>
+                      <span
+                        className={
+                          item.side === "BUY"
+                            ? "status-buy"
+                            : "status-neutral"
+                        }
+                      >
+                        {item.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={panelIn}
+          id="projects"
+          className="terminal-panel"
+        >
+          <PanelHeader
+            icon={<BarChart3 className="h-4 w-4" />}
+            label="Project Watchlist"
+            code="PRJ"
+          />
+          <div className="grid gap-px bg-[var(--surface-border)]">
+            {portfolioData.projects.map((project) => (
+              <article key={project.id} className="project-row">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-[11px] text-[var(--terminal-amber)]">
+                      {project.id} / {project.stack}
+                    </p>
+                    <h2 className="mt-1 text-lg font-black text-white">
+                      {project.title}
+                    </h2>
+                  </div>
+                  <span className="signal-pill">{project.signal}</span>
+                </div>
+                <p className="mt-3 text-sm leading-6 text-[var(--foreground)]">
+                  {project.thesis}
+                </p>
+              </article>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      <section className="grid gap-px bg-[var(--surface-border)] p-px lg:grid-cols-[0.85fr_1.15fr]">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={panelIn}
+          id="education"
+          className="terminal-panel"
+        >
+          <PanelHeader
+            icon={<GraduationCap className="h-4 w-4" />}
+            label="Education & Awards"
+            code="EDU"
+          />
+          <div className="grid gap-px bg-[var(--surface-border)]">
+            {portfolioData.education.map((item) => (
+              <div key={item.title} className="bg-[var(--surface)] p-5">
+                <p className="text-xs uppercase text-[var(--muted)]">
+                  {item.period}
+                </p>
+                <h2 className="mt-2 text-xl font-black text-white">
+                  {item.title}
+                </h2>
+                <p className="mt-1 text-sm text-[var(--foreground)]">
+                  {item.subtitle}
+                </p>
+                <p className="mt-3 font-bold text-[var(--positive)]">
+                  {item.meta}
+                </p>
+              </div>
+            ))}
+          </div>
+          <div className="p-5">
+            <p className="mb-3 text-xs uppercase text-[var(--terminal-amber)]">
+              Honors
+            </p>
+            <div className="space-y-2">
+              {portfolioData.awards.map((award) => (
+                <p key={award} className="flex gap-2 text-sm text-white">
+                  <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-[var(--jp-pink)]" />
+                  {award}
+                </p>
+              ))}
             </div>
           </div>
-        </motion.section>
+        </motion.div>
 
-      </main>
-      
-      {/* Scanline Overlay */}
-      <div className="scanline"></div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={panelIn}
+          id="skills"
+          className="terminal-panel"
+        >
+          <PanelHeader
+            icon={<Terminal className="h-4 w-4" />}
+            label="Skill Heatmap"
+            code="SKL"
+          />
+          <div className="grid gap-px bg-[var(--surface-border)] md:grid-cols-2">
+            {Object.entries(portfolioData.skills).map(([category, skills]) => (
+              <div key={category} className="skill-panel">
+                <div className="mb-4 flex items-center justify-between">
+                  <h2 className="font-black uppercase text-white">{category}</h2>
+                  <Activity className="h-4 w-4 text-[var(--positive)]" />
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {skills.map((skill) => (
+                    <span key={skill} className="skill-chip">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <footer className="flex flex-col gap-3 border-t border-[var(--surface-border)] p-5 text-sm md:flex-row md:items-center md:justify-between">
+            <p className="text-[var(--muted)]">
+              root@athallah-terminal:~$ open bilingual_data_strategy.deck
+            </p>
+            <a
+              href={portfolioData.personal.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 font-bold uppercase text-[var(--terminal-amber)]"
+            >
+              LinkedIn
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+          </footer>
+        </motion.div>
+      </section>
+    </main>
+  );
+}
+
+function PanelHeader({
+  icon,
+  label,
+  code,
+}: {
+  icon: ReactNode;
+  label: string;
+  code: string;
+}) {
+  return (
+    <div className="flex items-center justify-between border-b border-[var(--surface-border)] bg-[var(--panel-header)] px-4 py-3 text-xs uppercase">
+      <div className="flex items-center gap-2 font-bold text-[var(--terminal-amber)]">
+        {icon}
+        {label}
+      </div>
+      <div className="flex items-center gap-2 text-[var(--muted)]">
+        <BadgeJapaneseYen className="h-4 w-4 text-[var(--jp-pink)]" />
+        {code} / 東京-データ
+      </div>
     </div>
   );
 }
