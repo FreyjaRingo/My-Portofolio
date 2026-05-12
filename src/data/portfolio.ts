@@ -69,8 +69,8 @@ export const portfolioData = {
       id: "SMA-04",
       title: "SPARK Student Ambassador",
       company: "SeaMoney - Shopee & SeaBank",
-      period: "Jan 2025 - Present",
-      status: "LIVE",
+      period: "Sep 2025 - Jan 2026",
+      status: "CLOSED",
       side: "BUY",
       descriptions: [
         "Running campaigns for SeaBank and ShopeePay adoption among students.",
