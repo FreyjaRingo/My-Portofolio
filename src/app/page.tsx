@@ -5,17 +5,20 @@ import {
   ArrowUpRight,
   BadgeJapaneseYen,
   BarChart3,
+  BookOpenText,
   BriefcaseBusiness,
   CandlestickChart,
   Download,
+  GitBranch,
   GraduationCap,
+  Image as ImageIcon,
   Languages,
-  Mail,
   Radio,
   Sparkles,
   Terminal,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import NextImage from "next/image";
 import type { ReactNode } from "react";
 import { portfolioData } from "@/data/portfolio";
 
@@ -30,6 +33,8 @@ const statusClassMap: Record<string, string> = {
   TRAINING: "status-training",
 };
 
+const navItems = ["Overview", "Experience", "Projects", "Skills", "Media"];
+
 const getStatusClass = (status: string) =>
   statusClassMap[status.trim().toUpperCase()] ?? "status-neutral";
 
@@ -37,32 +42,30 @@ export default function Home() {
   return (
     <main className="terminal-shell min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="sticky top-0 z-50 border-b border-[var(--surface-border)] bg-[var(--background)]/95 backdrop-blur">
-        <div className="flex min-h-12 flex-col border-b border-[var(--surface-border)] lg:flex-row lg:items-center">
-          <div className="flex items-center gap-3 border-b border-[var(--surface-border)] px-4 py-3 lg:w-[360px] lg:border-b-0 lg:border-r">
+        <div className="terminal-topbar">
+          <div className="brand-cell">
             <CandlestickChart className="h-5 w-5 text-[var(--terminal-amber)]" />
-            <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
+            <div className="min-w-0">
+              <p className="truncate text-[10px] uppercase tracking-[0.18em] text-[var(--muted)] sm:text-xs">
                 Bloomberg-inspired personal terminal
               </p>
-              <p className="text-sm font-bold text-white">
+              <p className="truncate text-sm font-bold text-white">
                 {portfolioData.personal.ticker} / PORTFOLIO MONITOR
               </p>
             </div>
           </div>
-          <nav className="flex flex-1 items-center gap-1 overflow-x-auto px-2 py-2 text-[11px] uppercase">
-            {["Overview", "Experience", "Projects", "Skills", "Education"].map(
-              (item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="market-tab"
-                >
-                  {item}
-                </a>
-              ),
-            )}
+          <nav className="market-nav">
+            {navItems.map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="market-tab"
+              >
+                {item}
+              </a>
+            ))}
           </nav>
-          <div className="hidden border-l border-[var(--surface-border)] px-4 py-3 text-right text-xs lg:block">
+          <div className="session-cell">
             <p className="text-[var(--muted)]">SESSION</p>
             <p className="font-bold text-[var(--positive)]">LIVE / ASIA-JKT</p>
           </div>
@@ -83,70 +86,40 @@ export default function Home() {
         </div>
       </header>
 
-      <section
-        id="overview"
-        className="grid gap-px bg-[var(--surface-border)] p-px lg:grid-cols-[1.35fr_0.65fr]"
-      >
+      <section id="overview" className="terminal-grid hero-grid">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={panelIn}
           transition={{ duration: 0.4 }}
-          className="terminal-panel min-h-[560px] p-5 md:p-8"
+          className="terminal-panel p-4 sm:p-6 lg:p-8"
         >
-          <div className="mb-8 flex flex-wrap items-center gap-2 text-[11px] uppercase">
+          <div className="terminal-chip-row">
             <span className="terminal-chip bg-[var(--terminal-amber)] text-black">
               Equity Research Note
             </span>
             <span className="terminal-chip">Data desk active</span>
             <span className="terminal-chip text-[var(--jp-pink)]">
-              オタク・マーケット
+              {portfolioData.japanese.market}
             </span>
           </div>
 
-          <div className="grid gap-8 xl:grid-cols-[1fr_280px]">
+          <div className="mt-7 grid gap-6 xl:grid-cols-[1fr_320px]">
             <div>
-              <p className="mb-3 text-xs uppercase tracking-[0.32em] text-[var(--terminal-amber)]">
+              <p className="mb-3 text-xs uppercase tracking-[0.28em] text-[var(--terminal-amber)]">
                 {portfolioData.personal.alias}
               </p>
-              <h1 className="max-w-5xl text-4xl font-black uppercase leading-[0.95] text-white md:text-6xl xl:text-7xl">
-                {portfolioData.personal.name}
-              </h1>
-              <p className="mt-4 max-w-3xl text-base leading-7 text-[var(--foreground)] md:text-lg">
+              <h1 className="hero-title">{portfolioData.personal.name}</h1>
+              <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--foreground)] sm:text-base md:text-lg">
                 {portfolioData.personal.summary}
               </p>
             </div>
 
-            <div className="terminal-card jp-card">
-              <div className="flex items-center justify-between border-b border-[var(--surface-border)] pb-3">
-                <div>
-                  <p className="text-[11px] uppercase text-[var(--muted)]">
-                    Language Alpha
-                  </p>
-                  <p className="font-bold text-white">JLPT N2 Certified</p>
-                </div>
-                <Languages className="h-5 w-5 text-[var(--jp-pink)]" />
-              </div>
-              <div className="py-5">
-                <p className="text-5xl font-black text-[var(--jp-pink)]">
-                  日本語
-                </p>
-                <p className="mt-2 text-sm leading-6 text-[var(--foreground)]">
-                  Japanese-ready operator with an otaku-coded curiosity for
-                  systems, story worlds, and disciplined craft.
-                </p>
-              </div>
-              <div className="grid grid-cols-2 gap-px bg-[var(--surface-border)] text-xs">
-                <div className="bg-[var(--surface)] p-3">
-                  <p className="text-[var(--muted)]">LEVEL</p>
-                  <p className="font-bold text-white">N2</p>
-                </div>
-                <div className="bg-[var(--surface)] p-3">
-                  <p className="text-[var(--muted)]">SIGNAL</p>
-                  <p className="font-bold text-[var(--positive)]">STRONG</p>
-                </div>
-              </div>
-            </div>
+            <MediaFrame
+              media={portfolioData.personal.media}
+              ratio="portrait"
+              kicker="PROFILE_MEDIA"
+            />
           </div>
 
           <div className="mt-8 grid gap-px bg-[var(--surface-border)] sm:grid-cols-2 xl:grid-cols-4">
@@ -165,7 +138,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-8 grid gap-px bg-[var(--surface-border)] md:grid-cols-[1fr_auto_auto]">
+          <div className="mt-8 grid gap-px bg-[var(--surface-border)] lg:grid-cols-[1fr_auto_auto]">
             <div className="bg-[var(--surface)] p-4">
               <p className="text-[11px] uppercase text-[var(--muted)]">
                 Current Thread
@@ -181,14 +154,16 @@ export default function Home() {
               rel="noreferrer"
             >
               <Download className="h-4 w-4" />
-              Download CV
+              CV
             </a>
             <a
-              href={`mailto:${portfolioData.personal.email}`}
+              href={portfolioData.personal.github}
               className="action-cell"
+              target="_blank"
+              rel="noreferrer"
             >
-              <Mail className="h-4 w-4" />
-              Contact
+              <GitBranch className="h-4 w-4" />
+              GitHub
             </a>
           </div>
         </motion.div>
@@ -198,12 +173,9 @@ export default function Home() {
           animate="visible"
           variants={panelIn}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="terminal-panel p-5"
+          className="terminal-panel p-4 sm:p-5"
         >
-          <div className="terminal-title">
-            <Radio className="h-4 w-4 text-[var(--positive)]" />
-            Market Pulse
-          </div>
+          <PanelTitle icon={<Radio className="h-4 w-4" />} label="Market Pulse" />
           <div className="mt-5 space-y-3">
             {[
               ["FOCUS", "Financial data product strategy"],
@@ -219,137 +191,202 @@ export default function Home() {
           </div>
 
           <div className="mt-6 terminal-card p-4">
-            <p className="text-xs uppercase text-[var(--terminal-amber)]">
-              Akihabara Watchlist
-            </p>
-            <div className="mt-4 space-y-3 text-sm">
-              {[
-                ["JLPT N2", "Language alpha"],
-                ["Anime literacy", "Culture radar"],
-                ["Data storytelling", "Insight arc"],
-                ["Discipline", "Shonen training loop"],
-              ].map(([name, note]) => (
-                <div
-                  key={name}
-                  className="flex items-center justify-between gap-4 border-b border-[var(--surface-border)] pb-2 last:border-0"
-                >
-                  <span className="text-white">{name}</span>
-                  <span className="text-xs text-[var(--muted)]">{note}</span>
-                </div>
-              ))}
+            <div className="flex items-center justify-between gap-4 border-b border-[var(--surface-border)] pb-3">
+              <div>
+                <p className="text-[11px] uppercase text-[var(--muted)]">
+                  Language Alpha
+                </p>
+                <p className="font-bold text-white">JLPT N2 Certified</p>
+              </div>
+              <Languages className="h-5 w-5 text-[var(--jp-pink)]" />
             </div>
+            <p className="mt-5 text-5xl font-black text-[var(--jp-pink)]">
+              {portfolioData.japanese.headline}
+            </p>
+            <p className="mt-3 text-sm leading-6 text-[var(--foreground)]">
+              {portfolioData.japanese.motto}
+            </p>
           </div>
 
-          <div className="mt-6 grid grid-cols-2 gap-px bg-[var(--surface-border)]">
-            {["Python", "SQL", "NLP", "YOLO", "VBA", "JP-N2"].map((skill) => (
-              <div key={skill} className="heat-cell">
-                {skill}
+          <div className="mt-6 grid gap-px bg-[var(--surface-border)]">
+            {portfolioData.japanese.watchlist.map((item) => (
+              <div key={item.romaji} className="jp-signal-row">
+                <span className="text-2xl font-black text-[var(--jp-pink)]">
+                  {item.term}
+                </span>
+                <div>
+                  <p className="font-bold uppercase text-white">{item.romaji}</p>
+                  <p className="text-xs text-[var(--muted)]">{item.meaning}</p>
+                </div>
               </div>
             ))}
           </div>
         </motion.aside>
       </section>
 
-      <section className="grid gap-px bg-[var(--surface-border)] p-px xl:grid-cols-[1.15fr_0.85fr]">
+      <section className="terminal-grid social-grid">
+        <div className="terminal-panel p-4 sm:p-5">
+          <PanelTitle icon={<GitBranch className="h-4 w-4" />} label="Social Tickers" />
+          <div className="mt-4 grid gap-px bg-[var(--surface-border)] md:grid-cols-3">
+            {portfolioData.socialLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+                rel={link.href.startsWith("mailto:") ? undefined : "noreferrer"}
+                className="social-card"
+              >
+                <div>
+                  <p className="text-xs uppercase text-[var(--muted)]">
+                    {link.status}
+                  </p>
+                  <p className="mt-1 font-black text-white">{link.label}</p>
+                  <p className="mt-2 text-xs text-[var(--foreground)]">
+                    {link.handle}
+                  </p>
+                </div>
+                <ArrowUpRight className="h-4 w-4 text-[var(--terminal-amber)]" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" className="terminal-grid">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={panelIn}
-          id="experience"
           className="terminal-panel"
         >
           <PanelHeader
             icon={<BriefcaseBusiness className="h-4 w-4" />}
             label="Experience Blotter"
             code="EXP"
+            jp={portfolioData.japanese.desk}
           />
-          <div className="overflow-x-auto">
-            <table className="market-table">
-              <thead>
-                <tr>
-                  <th>Ticker</th>
-                  <th>Position</th>
-                  <th>Desk</th>
-                  <th>Period</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {portfolioData.experience.map((item) => (
-                  <tr key={item.id}>
-                    <td className="text-[var(--terminal-amber)]">{item.id}</td>
-                    <td>
-                      <p className="font-bold text-white">{item.title}</p>
-                      <p className="mt-1 max-w-xl text-[11px] leading-5 text-[var(--muted)]">
-                        {item.descriptions.join(" ")}
+          <div className="blotter-list">
+            {portfolioData.experience.map((item) => (
+              <article key={item.id} className="experience-card">
+                <MediaFrame media={item.media} ratio="wide" kicker={item.id} />
+                <div className="min-w-0 p-4 sm:p-5">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <p className="text-[11px] uppercase text-[var(--terminal-amber)]">
+                        {item.id} / {item.company}
                       </p>
-                    </td>
-                    <td>{item.company}</td>
-                    <td>{item.period}</td>
-                    <td>
-                      <span
-                        className={getStatusClass(item.status)}
-                      >
-                        {item.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={panelIn}
-          id="projects"
-          className="terminal-panel"
-        >
-          <PanelHeader
-            icon={<BarChart3 className="h-4 w-4" />}
-            label="Project Watchlist"
-            code="PRJ"
-          />
-          <div className="grid gap-px bg-[var(--surface-border)]">
-            {portfolioData.projects.map((project) => (
-              <article key={project.id} className="project-row">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-[11px] text-[var(--terminal-amber)]">
-                      {project.id} / {project.stack}
-                    </p>
-                    <h2 className="mt-1 text-lg font-black text-white">
-                      {project.title}
-                    </h2>
+                      <h2 className="mt-1 text-xl font-black text-white">
+                        {item.title}
+                      </h2>
+                      <p className="mt-1 text-xs text-[var(--muted)]">
+                        {item.period}
+                      </p>
+                    </div>
+                    <span className={getStatusClass(item.status)}>
+                      {item.status}
+                    </span>
                   </div>
-                  <span className="signal-pill">{project.signal}</span>
+                  <div className="mt-4 space-y-2">
+                    {item.descriptions.map((desc) => (
+                      <p key={desc} className="terminal-line">
+                        {desc}
+                      </p>
+                    ))}
+                  </div>
                 </div>
-                <p className="mt-3 text-sm leading-6 text-[var(--foreground)]">
-                  {project.thesis}
-                </p>
               </article>
             ))}
           </div>
         </motion.div>
       </section>
 
-      <section className="grid gap-px bg-[var(--surface-border)] p-px lg:grid-cols-[0.85fr_1.15fr]">
+      <section id="projects" className="terminal-grid project-grid">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={panelIn}
-          id="education"
+          className="terminal-panel"
+        >
+          <PanelHeader
+            icon={<BarChart3 className="h-4 w-4" />}
+            label="Project Watchlist"
+            code="PRJ"
+            jp={portfolioData.japanese.desk}
+          />
+          <div className="project-board">
+            {portfolioData.projects.map((project) => (
+              <article key={project.id} className="project-card">
+                <MediaFrame media={project.media} ratio="wide" kicker={project.id} />
+                <div className="p-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-[11px] text-[var(--terminal-amber)]">
+                        {project.id} / {project.stack}
+                      </p>
+                      <h2 className="mt-1 text-lg font-black text-white">
+                        {project.title}
+                      </h2>
+                    </div>
+                    <span className="signal-pill">{project.signal}</span>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-[var(--foreground)]">
+                    {project.thesis}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      <section className="terminal-grid bottom-grid">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={panelIn}
+          id="skills"
+          className="terminal-panel"
+        >
+          <PanelHeader
+            icon={<Terminal className="h-4 w-4" />}
+            label="Skill Heatmap"
+            code="SKL"
+            jp={portfolioData.japanese.desk}
+          />
+          <div className="grid gap-px bg-[var(--surface-border)] sm:grid-cols-2">
+            {Object.entries(portfolioData.skills).map(([category, skills]) => (
+              <div key={category} className="skill-panel">
+                <div className="mb-4 flex items-center justify-between">
+                  <h2 className="font-black uppercase text-white">{category}</h2>
+                  <Activity className="h-4 w-4 text-[var(--positive)]" />
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {skills.map((skill) => (
+                    <span key={skill} className="skill-chip">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={panelIn}
           className="terminal-panel"
         >
           <PanelHeader
             icon={<GraduationCap className="h-4 w-4" />}
             label="Education & Awards"
             code="EDU"
+            jp={portfolioData.japanese.desk}
           />
           <div className="grid gap-px bg-[var(--surface-border)]">
             {portfolioData.education.map((item) => (
@@ -383,54 +420,33 @@ export default function Home() {
             </div>
           </div>
         </motion.div>
+      </section>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={panelIn}
-          id="skills"
-          className="terminal-panel"
-        >
-          <PanelHeader
-            icon={<Terminal className="h-4 w-4" />}
-            label="Skill Heatmap"
-            code="SKL"
-          />
-          <div className="grid gap-px bg-[var(--surface-border)] md:grid-cols-2">
-            {Object.entries(portfolioData.skills).map(([category, skills]) => (
-              <div key={category} className="skill-panel">
-                <div className="mb-4 flex items-center justify-between">
-                  <h2 className="font-black uppercase text-white">{category}</h2>
-                  <Activity className="h-4 w-4 text-[var(--positive)]" />
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {skills.map((skill) => (
-                    <span key={skill} className="skill-chip">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
+      <section id="media" className="terminal-grid">
+        <div className="terminal-panel p-4 sm:p-5">
+          <PanelTitle icon={<BookOpenText className="h-4 w-4" />} label="Media Template" />
+          <div className="mt-4 grid gap-px bg-[var(--surface-border)] md:grid-cols-2 xl:grid-cols-4">
+            {portfolioData.mediaGuide.map((path) => (
+              <div key={path} className="media-guide-cell">
+                <ImageIcon className="h-5 w-5 text-[var(--terminal-amber)]" />
+                <p className="mt-3 break-all text-xs leading-5 text-white">
+                  {path}
+                </p>
               </div>
             ))}
           </div>
-          <footer className="flex flex-col gap-3 border-t border-[var(--surface-border)] p-5 text-sm md:flex-row md:items-center md:justify-between">
-            <p className="text-[var(--muted)]">
-              root@athallah-terminal:~$ open bilingual_data_strategy.deck
-            </p>
-            <a
-              href={portfolioData.personal.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 font-bold uppercase text-[var(--terminal-amber)]"
-            >
-              LinkedIn
-              <ArrowUpRight className="h-4 w-4" />
-            </a>
-          </footer>
-        </motion.div>
+        </div>
       </section>
     </main>
+  );
+}
+
+function PanelTitle({ icon, label }: { icon: ReactNode; label: string }) {
+  return (
+    <div className="terminal-title">
+      <span className="text-[var(--positive)]">{icon}</span>
+      {label}
+    </div>
   );
 }
 
@@ -438,21 +454,70 @@ function PanelHeader({
   icon,
   label,
   code,
+  jp,
 }: {
   icon: ReactNode;
   label: string;
   code: string;
+  jp: string;
 }) {
   return (
-    <div className="flex items-center justify-between border-b border-[var(--surface-border)] bg-[var(--panel-header)] px-4 py-3 text-xs uppercase">
+    <div className="panel-header">
       <div className="flex items-center gap-2 font-bold text-[var(--terminal-amber)]">
         {icon}
         {label}
       </div>
       <div className="flex items-center gap-2 text-[var(--muted)]">
         <BadgeJapaneseYen className="h-4 w-4 text-[var(--jp-pink)]" />
-        {code} / 東京-データ
+        {code} / {jp}
       </div>
     </div>
+  );
+}
+
+function MediaFrame({
+  media,
+  ratio = "wide",
+  kicker,
+}: {
+  media: {
+    src: string;
+    alt: string;
+    caption: string;
+    slot: string;
+  };
+  ratio?: "wide" | "portrait";
+  kicker: string;
+}) {
+  const hasImage = Boolean(media.src);
+
+  return (
+    <figure className={`media-frame media-frame-${ratio}`}>
+      {hasImage ? (
+        <div className="media-image-wrap">
+          <NextImage
+            src={media.src}
+            alt={media.alt}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 45vw, 320px"
+            className="media-image"
+          />
+        </div>
+      ) : (
+        <div className="media-placeholder">
+          <ImageIcon className="h-6 w-6 text-[var(--terminal-amber)]" />
+          <p className="mt-3 text-xs font-black uppercase text-white">
+            {media.slot}
+          </p>
+          <p className="mt-2 break-all text-[11px] leading-5 text-[var(--muted)]">
+            {media.caption}
+          </p>
+        </div>
+      )}
+      <figcaption className="media-caption">
+        <span>{kicker}</span>
+        <span>{hasImage ? media.alt : "MEDIA SLOT"}</span>
+      </figcaption>
+    </figure>
   );
 }
