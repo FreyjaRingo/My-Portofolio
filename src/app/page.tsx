@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import NextImage from "next/image";
+import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { portfolioData } from "@/data/portfolio";
 
@@ -33,10 +34,19 @@ const statusClassMap: Record<string, string> = {
   TRAINING: "status-training",
 };
 
-const navItems = ["Overview", "Experience", "Projects", "Skills", "Media"];
+const navItems = ["Overview", "Experience", "Projects", "Skills", "Media", "Waifu"];
+
+const AUTO_ROTATE_MS = 3000;
 
 const getStatusClass = (status: string) =>
   statusClassMap[status.trim().toUpperCase()] ?? "status-neutral";
+
+type MediaItem = {
+  src: string;
+  alt: string;
+  caption: string;
+  slot: string;
+};
 
 export default function Home() {
   return (
@@ -437,6 +447,26 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section id="waifu" className="terminal-grid waifu-grid">
+        <div className="terminal-panel p-4 sm:p-5">
+          <PanelTitle icon={<Sparkles className="h-4 w-4" />} label="Waifu Archive" />
+          <div className="mt-4 grid gap-px bg-[var(--surface-border)] md:grid-cols-2 xl:grid-cols-3">
+            {portfolioData.waifuGallery.items.map((waifu) => (
+              <div key={waifu.name} className="waifu-card">
+                <MediaFrame media={waifu.media} ratio="portrait" kicker={waifu.name} />
+              </div>
+            ))}
+            <div className="waifu-card">
+              <MediaFrame
+                media={portfolioData.waifuGallery.realWaifu.media}
+                ratio="portrait"
+                kicker={portfolioData.waifuGallery.realWaifu.name}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
@@ -479,44 +509,76 @@ function MediaFrame({
   media,
   ratio = "wide",
   kicker,
+  autoRotateMs = AUTO_ROTATE_MS,
 }: {
-  media: {
-    src: string;
-    alt: string;
-    caption: string;
-    slot: string;
-  };
+  media: MediaItem[];
   ratio?: "wide" | "portrait";
   kicker: string;
+  autoRotateMs?: number;
 }) {
-  const hasImage = Boolean(media.src);
+  const items = useMemo(
+    () =>
+      media.length
+        ? media
+        : [
+            {
+              src: "",
+              alt: "Media placeholder",
+              caption: "",
+              slot: "MEDIA_SLOT",
+            },
+          ],
+    [media],
+  );
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (items.length <= 1) {
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % items.length);
+    }, autoRotateMs);
+
+    return () => window.clearInterval(intervalId);
+  }, [items.length, autoRotateMs]);
+
+  useEffect(() => {
+    setActiveIndex((current) => (items.length ? current % items.length : 0));
+  }, [items.length]);
+
+  const activeItem = items[activeIndex] ?? items[0];
+  const hasImage = Boolean(activeItem.src);
 
   return (
     <figure className={`media-frame media-frame-${ratio}`}>
       {hasImage ? (
         <div className="media-image-wrap">
           <NextImage
-            src={media.src}
-            alt={media.alt}
+            key={`${activeItem.src || activeItem.slot}-${activeIndex}`}
+            src={activeItem.src}
+            alt={activeItem.alt}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 45vw, 320px"
-            className="media-image"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 60vw, 420px"
+            quality={90}
+            className="media-image media-slide"
           />
         </div>
       ) : (
         <div className="media-placeholder">
           <ImageIcon className="h-6 w-6 text-[var(--terminal-amber)]" />
           <p className="mt-3 text-xs font-black uppercase text-white">
-            {media.slot}
+            {activeItem.slot}
           </p>
           <p className="mt-2 break-all text-[11px] leading-5 text-[var(--muted)]">
-            {media.caption}
+            {activeItem.caption}
           </p>
         </div>
       )}
       <figcaption className="media-caption">
         <span>{kicker}</span>
-        <span>{hasImage ? media.alt : "MEDIA SLOT"}</span>
+        <span>{hasImage ? activeItem.alt : activeItem.slot}</span>
       </figcaption>
     </figure>
   );

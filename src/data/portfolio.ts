@@ -15,12 +15,14 @@ export const portfolioData = {
     linkedin: "https://linkedin.com/in/athallah-azhar",
     github: "https://github.com/FreyjaRingo",
     cv: "/cv-athallah-azhar-aulia-hadi.pdf",
-    media: {
-      src: "",
-      alt: "Athallah Azhar Aulia Hadi profile visual",
-      caption: `${mediaBase}/profile/profile-terminal.jpg`,
-      slot: "PROFILE_VISUAL",
-    },
+    media: [
+      {
+        src: `${mediaBase}/profile/profile-photo.jpg`,
+        alt: "Athallah Azhar Aulia Hadi profile visual",
+        caption: `${mediaBase}/profile/profile-terminal.jpg`,
+        slot: "PROFILE_VISUAL",
+      },
+    ],
   },
   socialLinks: [
     {
@@ -41,6 +43,12 @@ export const portfolioData = {
       href: "mailto:athallah.rahza@gmail.com",
       status: "PING",
     },
+    {
+      label: "Instagram",
+      handle: "@athaaazhr",
+      href: "https://instagram.com/athaaazhr",
+      status: "SOCIAL",
+    }
   ],
   japanese: {
     headline: "\u65e5\u672c\u8a9e",
@@ -59,7 +67,75 @@ export const portfolioData = {
     `${mediaBase}/experience/maybank-dashboard.jpg`,
     `${mediaBase}/projects/drowsiness-demo.jpg`,
     `${mediaBase}/awards/japanese-olympiad.jpg`,
+    `${mediaBase}/waifu/waifu-alpha-01.jpg`,
+    `${mediaBase}/waifu/real-waifu-01.jpg`,
   ],
+  waifuGallery: {
+    items: [
+      {
+        name: "Asanagi Umi",
+        media: [
+          {
+            src: `${mediaBase}/waifu/asanagi_umi.jpeg`,
+            alt: "Asanagi Umi portrait 01",
+            caption: `${mediaBase}/waifu/asanagi-umi-01.jpeg`,
+            slot: "WAIFU_ALPHA_01",
+          },
+          {
+            src: `${mediaBase}/waifu/asanagi-umi-02.jpeg`,
+            alt: "Asanagi Umi portrait 02",
+            caption: `${mediaBase}/waifu/asanagi-umi-02.jpeg`,
+            slot: "WAIFU_ALPHA_02",
+          },
+        ],
+      },
+      {
+        name: "Haimiya Mio",
+        media: [
+          {
+            src: `${mediaBase}/waifu/haimiya_mio.jpeg`,
+            alt: "Haimiya Mio portrait 01",
+            caption: `${mediaBase}/waifu/haimiya-mio-01.jpeg`,
+            slot: "WAIFU_BETA_01",
+          },
+          {
+            src: `${mediaBase}/waifu/haimiya-mio-02.jpeg`,
+            alt: "Haimiya Mio portrait 02",
+            caption: `${mediaBase}/waifu/haimiya-mio-02.jpeg`,
+            slot: "WAIFU_BETA_02",
+          },
+        ],
+      },
+      {
+        name: "Waifu Gamma",
+        media: [
+          {
+            src: "",
+            alt: "Waifu Gamma portrait 01",
+            caption: `${mediaBase}/waifu/waifu-gamma-01.jpg`,
+            slot: "WAIFU_GAMMA_01",
+          },
+          {
+            src: "",
+            alt: "Waifu Gamma portrait 02",
+            caption: `${mediaBase}/waifu/waifu-gamma-02.jpg`,
+            slot: "WAIFU_GAMMA_02",
+          },
+        ],
+      }
+    ],
+    realWaifu: {
+      name: "Real Waifu (Pacar)",
+      media: [
+        {
+          src: "",
+          alt: "Real waifu placeholder",
+          caption: `${mediaBase}/waifu/real-waifu-01.jpg`,
+          slot: "REAL_WAIFU_01",
+        },
+      ],
+    },
+  },
   terminalTape: [
     { label: "GPA", value: "3.81", trend: "+MERIT" },
     { label: "JLPT", value: "N2", trend: "\u65e5\u672c\u8a9e" },
@@ -83,12 +159,14 @@ export const portfolioData = {
       period: "Feb 2026 - Present",
       status: "LIVE",
       side: "BUY",
-      media: {
-        src: "",
-        alt: "Maybank strategy dashboard or office documentation",
-        caption: `${mediaBase}/experience/maybank-dashboard.jpg`,
-        slot: "EXP_MAYBANK_STRATEGIST",
-      },
+      media: [
+        {
+          src: "",
+          alt: "Maybank strategy dashboard or office documentation",
+          caption: `${mediaBase}/experience/maybank-dashboard.jpg`,
+          slot: "EXP_MAYBANK_STRATEGIST",
+        },
+      ],
       descriptions: [
         "Developing Streamlit dashboard with Refinitiv data for mutual fund and bond performance tracking.",
         "Engineering automated Excel templates using VBA and Macros for investment product sales support.",
@@ -102,12 +180,14 @@ export const portfolioData = {
       period: "Mar 2024 - Present",
       status: "LIVE",
       side: "BUY",
-      media: {
-        src: "",
-        alt: "Maybank student ambassador event documentation",
-        caption: `${mediaBase}/experience/maybank-ambassador.jpg`,
-        slot: "EXP_MAYBANK_AMBASSADOR",
-      },
+      media: [
+        {
+          src: "",
+          alt: "Maybank student ambassador event documentation",
+          caption: `${mediaBase}/experience/maybank-ambassador.jpg`,
+          slot: "EXP_MAYBANK_AMBASSADOR",
+        },
+      ],
       descriptions: [
         "Hosted business plan, CV, and internship workshops for 70+ students.",
         "Built campus relationships to improve engagement with Maybank initiatives.",
@@ -120,12 +200,14 @@ export const portfolioData = {
       period: "Feb 2026 - Present",
       status: "TRAINING",
       side: "HOLD",
-      media: {
-        src: "",
-        alt: "DBS Coding Camp data science learning proof",
-        caption: `${mediaBase}/experience/dbs-coding-camp.jpg`,
-        slot: "EXP_DBS_COHORT",
-      },
+      media: [
+        {
+          src: "",
+          alt: "DBS Coding Camp data science learning proof",
+          caption: `${mediaBase}/experience/dbs-coding-camp.jpg`,
+          slot: "EXP_DBS_COHORT",
+        },
+      ],
       descriptions: [
         "Building applied data science foundations for professional environments.",
         "Developing collaborative project skills across technical and business contexts.",
@@ -138,12 +220,14 @@ export const portfolioData = {
       period: "Sep 2025 - Jan 2026",
       status: "CLOSED",
       side: "HOLD",
-      media: {
-        src: "",
-        alt: "SeaMoney SPARK campaign documentation",
-        caption: `${mediaBase}/experience/seamoney-spark.jpg`,
-        slot: "EXP_SEAMONEY_SPARK",
-      },
+      media: [
+        {
+          src: "",
+          alt: "SeaMoney SPARK campaign documentation",
+          caption: `${mediaBase}/experience/seamoney-spark.jpg`,
+          slot: "EXP_SEAMONEY_SPARK",
+        },
+      ],
       descriptions: [
         "Running campaigns for SeaBank and ShopeePay adoption among students.",
         "Promoting fintech products through social media and campus activities.",
@@ -156,12 +240,14 @@ export const portfolioData = {
       period: "Feb 2025 - Dec 2025",
       status: "CLOSED",
       side: "HOLD",
-      media: {
-        src: "",
-        alt: "Teaching assistant lab or class documentation",
-        caption: `${mediaBase}/experience/unpad-teaching-assistant.jpg`,
-        slot: "EXP_UNPAD_TA",
-      },
+      media: [
+        {
+          src: "",
+          alt: "Teaching assistant lab or class documentation",
+          caption: `${mediaBase}/experience/unpad-teaching-assistant.jpg`,
+          slot: "EXP_UNPAD_TA",
+        },
+      ],
       descriptions: [
         "Guided 40 students in numerical methods using Excel, C++, and Python.",
         "Taught assembly basics with NASM/DOSBox and digital logic labs with Tinkercad.",
@@ -174,12 +260,14 @@ export const portfolioData = {
       title: "Driver Drowsiness Detection",
       stack: "Python, MediaPipe",
       signal: "+30F",
-      media: {
-        src: "",
-        alt: "Driver drowsiness detection demo frame",
-        caption: `${mediaBase}/projects/drowsiness-demo.jpg`,
-        slot: "PRJ_DROWSINESS",
-      },
+      media: [
+        {
+          src: "",
+          alt: "Driver drowsiness detection demo frame",
+          caption: `${mediaBase}/projects/drowsiness-demo.jpg`,
+          slot: "PRJ_DROWSINESS",
+        },
+      ],
       thesis:
         "Face Mesh pipeline using EAR/MAR temporal thresholds, frame skipping, and face cropping for efficient detection.",
     },
@@ -188,12 +276,14 @@ export const portfolioData = {
       title: "Public Sentiment Analysis on KPK",
       stack: "Python, Scikit-learn, NLTK, Sastrawi",
       signal: ">85% F1",
-      media: {
-        src: "",
-        alt: "KPK sentiment analysis chart or dashboard",
-        caption: `${mediaBase}/projects/kpk-sentiment.jpg`,
-        slot: "PRJ_KPK_SENTIMENT",
-      },
+      media: [
+        {
+          src: "",
+          alt: "KPK sentiment analysis chart or dashboard",
+          caption: `${mediaBase}/projects/kpk-sentiment.jpg`,
+          slot: "PRJ_KPK_SENTIMENT",
+        },
+      ],
       thesis:
         "Collected and processed X/Twitter data from 2015 and 2025, then classified sentiment using Naive Bayes and SVM.",
     },
@@ -202,12 +292,14 @@ export const portfolioData = {
       title: "DataNiaga: Retail Decision Support",
       stack: "Python, LightGBM, FP-Growth",
       signal: "+10W",
-      media: {
-        src: "",
-        alt: "DataNiaga retail decision support dashboard",
-        caption: `${mediaBase}/projects/dataniaga-dashboard.jpg`,
-        slot: "PRJ_DATANIAGA",
-      },
+      media: [
+        {
+          src: "",
+          alt: "DataNiaga retail decision support dashboard",
+          caption: `${mediaBase}/projects/dataniaga-dashboard.jpg`,
+          slot: "PRJ_DATANIAGA",
+        },
+      ],
       thesis:
         "Forecasted retail sales for the next 10 weeks and generated product recommendations from transaction data.",
     },
@@ -216,12 +308,14 @@ export const portfolioData = {
       title: "Illegal Parking Detection",
       stack: "Python, YOLOv3",
       signal: "REALTIME",
-      media: {
-        src: "",
-        alt: "Illegal parking detection output frame",
-        caption: `${mediaBase}/projects/illegal-parking-yolo.jpg`,
-        slot: "PRJ_PARKING_YOLO",
-      },
+      media: [
+        {
+          src: "",
+          alt: "Illegal parking detection output frame",
+          caption: `${mediaBase}/projects/illegal-parking-yolo.jpg`,
+          slot: "PRJ_PARKING_YOLO",
+        },
+      ],
       thesis:
         "Computer vision system for identifying illegal parking as an urban monitoring prototype.",
     },
@@ -230,12 +324,14 @@ export const portfolioData = {
       title: "GrowMate Smart Farming Assistant",
       stack: "Agile, COCOMO II",
       signal: "PLAN",
-      media: {
-        src: "",
-        alt: "GrowMate planning board or app mockup",
-        caption: `${mediaBase}/projects/growmate-plan.jpg`,
-        slot: "PRJ_GROWMATE",
-      },
+      media: [
+        {
+          src: "",
+          alt: "GrowMate planning board or app mockup",
+          caption: `${mediaBase}/projects/growmate-plan.jpg`,
+          slot: "PRJ_GROWMATE",
+        },
+      ],
       thesis:
         "Planned project schedule, cost estimation, work breakdown structure, and risk management for a farming assistant app.",
     },
