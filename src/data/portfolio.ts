@@ -22,7 +22,7 @@ export const portfolioData = {
     media: [
       {
         src: `${mediaBase}/profile/profile-photo.jpg`,
-        alt: "Athallah Azhar Aulia Hadi profile visual",
+        alt: "Portrait of Athallah Azhar Aulia Hadi",
         caption: "Profile",
         slot: "PROFILE_VISUAL",
       },
@@ -73,7 +73,7 @@ export const portfolioData = {
     { label: "TOEFL", value: "600", trend: "+BILINGUAL" },
     { label: "MAYBANK", value: "CLOSED", trend: "STRAT" },
     { label: "BCA", value: "SCHOLAR", trend: "2025" },
-    { label: "PROJECTS", value: "6", trend: "BUILT" },
+    { label: "PROJECTS", value: "7", trend: "CASE STUDIES" },
   ],
   kpis: [
     { label: "Current desk", value: "Danamon", detail: "Data Innovation & AI intern" },
@@ -193,80 +193,6 @@ export const portfolioData = {
       ],
     },
   ],
-  projects: [
-    {
-      id: "DWH-01",
-      title: "Enterprise Data Warehouse for a Super-App",
-      stack: "Python, PostgreSQL, ClickHouse, FastAPI, Next.js",
-      signal: "SCD2",
-      period: "May - Jun 2026",
-      media: noMedia,
-      thesis:
-        "Galaxy schema with 4 fact tables and 8 conformed dimensions for a simulated ride, food, delivery, and wallet ecosystem. Python ETL with SCD Type 2, ClickHouse materialized views for pre-aggregation, and a FastAPI plus Next.js dashboard.",
-      links: [{ label: "Code", href: "https://github.com/Luthfi-AS/GojekDataWarehouse" }],
-    },
-    {
-      id: "REC-02",
-      title: "NutriMatch",
-      stack: "Python, Next.js, Supabase, PostgreSQL",
-      signal: "7-DAY PLAN",
-      period: "Apr - Jun 2026",
-      media: noMedia,
-      thesis:
-        "Allergy-aware weekly meal plan recommender. I handled the data side: nutrition and allergen datasets, BMR and TDEE targets, macro splits, and the filtering logic behind recommendations.",
-      links: [
-        { label: "Live", href: "https://nutrimatch-app.vercel.app/" },
-        { label: "Code", href: "https://github.com/Kurtz17/NutriMatch" },
-      ],
-    },
-    {
-      id: "WEB-03",
-      title: "CareConnect",
-      stack: "Next.js, TypeScript, Prisma, PostgreSQL, Vitest",
-      signal: "3 ROLES",
-      period: "Mar - Jun 2026",
-      media: noMedia,
-      thesis:
-        "Mental health platform with anonymous consultations, case reporting, a moderated forum, and Midtrans donations. Front-end developer on a role-based app with unit tests and a GitHub Actions CI pipeline.",
-      links: [
-        { label: "Live", href: "https://care-connect-ten-hazel.vercel.app/" },
-        { label: "Code", href: "https://github.com/KangDap/care-connect" },
-      ],
-    },
-    {
-      id: "DSS-04",
-      title: "DataNiaga: Retail Decision Support",
-      stack: "Python, LightGBM, FP-Growth",
-      signal: "MAE/MAPE",
-      period: "Oct - Dec 2025",
-      media: noMedia,
-      thesis:
-        "Demand forecasting with LightGBM and a Tweedie loss for zero-inflated sales, plus FP-Growth market basket analysis, modeled separately per island region.",
-      links: [],
-    },
-    {
-      id: "NLP-05",
-      title: "Xiaomi vs Advan: Sentiment & Aspect Analysis",
-      stack: "Python, Selenium, SVM, LDA",
-      signal: "90.8% ACC",
-      period: "Oct - Dec 2025",
-      media: noMedia,
-      thesis:
-        "Scraped Tokopedia reviews, labeled them semi-automatically with manual validation, and classified sentiment with SVM. LDA traced local-brand complaints to dead-on-arrival units and returns rather than features.",
-      links: [],
-    },
-    {
-      id: "NLP-06",
-      title: "Toxicity in Public Opinion on Polri, 2015 vs 2025",
-      stack: "Python, Selenium, Lexicon, LDA",
-      signal: "12K+ POSTS",
-      period: "2025",
-      media: noMedia,
-      thesis:
-        "Compared toxic discourse on X across two crises. The share of users posting aggressive content rose from 7.35% in 2015 to 18.12% in 2025, and topics shifted from legal criticism to humanitarian anger.",
-      links: [],
-    },
-  ],
   education: [
     {
       title: "Universitas Padjadjaran",
@@ -283,6 +209,8 @@ export const portfolioData = {
   ],
   awards: [
     "Bakti BCA Scholarship Awardee, 2025",
+    "SPARK Student Ambassador, 2025",
+    "Maybank Student Ambassador, 2024 and 2025",
     "2nd Place, Japanese Language Olympiad DKI Jakarta, 2022",
   ],
   certifications: [
