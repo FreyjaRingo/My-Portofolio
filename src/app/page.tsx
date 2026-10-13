@@ -1,585 +1,545 @@
 "use client";
 
 import {
-  Activity,
   ArrowUpRight,
-  BadgeJapaneseYen,
-  BarChart3,
-  BookOpenText,
-  BriefcaseBusiness,
-  CandlestickChart,
   Download,
   GitBranch,
-  GraduationCap,
-  Image as ImageIcon,
-  Languages,
-  Radio,
-  Sparkles,
-  Terminal,
+  Link2,
+  Mail,
+  AtSign,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import NextImage from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { portfolioData } from "@/data/portfolio";
 
-const panelIn = {
-  hidden: { opacity: 0, y: 14 },
-  visible: { opacity: 1, y: 0 },
+const { personal } = portfolioData;
+
+const sections = [
+  { id: "overview", code: "DES", label: "Overview" },
+  { id: "experience", code: "EXP", label: "Experience" },
+  { id: "projects", code: "PRJ", label: "Projects" },
+  { id: "skills", code: "SKL", label: "Skills" },
+  { id: "contact", code: "CNT", label: "Contact" },
+];
+
+const statusMeta: Record<string, { label: string; tone: string }> = {
+  LIVE: { label: "Active", tone: "up" },
+  TRAINING: { label: "In training", tone: "info" },
+  CLOSED: { label: "Completed", tone: "flat" },
 };
 
-const statusClassMap: Record<string, string> = {
-  LIVE: "status-buy",
-  CLOSED: "status-closed",
-  TRAINING: "status-training",
+const socialIcon: Record<string, ReactNode> = {
+  GitHub: <GitBranch className="h-4 w-4" aria-hidden />,
+  LinkedIn: <Link2 className="h-4 w-4" aria-hidden />,
+  Email: <Mail className="h-4 w-4" aria-hidden />,
+  Instagram: <AtSign className="h-4 w-4" aria-hidden />,
 };
 
-const navItems = ["Overview", "Experience", "Projects", "Skills", "Media", "Waifu"];
-
-const AUTO_ROTATE_MS = 3000;
-
-const getStatusClass = (status: string) =>
-  statusClassMap[status.trim().toUpperCase()] ?? "status-neutral";
-
-type MediaItem = {
-  src: string;
-  alt: string;
-  caption: string;
-  slot: string;
-};
+const pulse = [
+  ["Focus", "Financial data products"],
+  ["Models", "Forecasting, NLP, recommenders"],
+  ["Stack", "Python, SQL, Streamlit, Next.js"],
+  ["Based in", personal.location],
+];
 
 export default function Home() {
+  const active = useActiveSection();
+
   return (
-    <main className="terminal-shell min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <header className="sticky top-0 z-50 border-b border-[var(--surface-border)] bg-[var(--background)]/95 backdrop-blur">
-        <div className="terminal-topbar">
-          <div className="brand-cell">
-            <CandlestickChart className="h-5 w-5 text-[var(--terminal-amber)]" />
-            <div className="min-w-0">
-              <p className="truncate text-[10px] uppercase tracking-[0.18em] text-[var(--muted)] sm:text-xs">
-                Bloomberg-inspired personal terminal
-              </p>
-              <p className="truncate text-sm font-bold text-white">
-                {portfolioData.personal.ticker} / PORTFOLIO MONITOR
-              </p>
-            </div>
-          </div>
-          <nav className="market-nav">
-            {navItems.map((item) => (
+    <div className="site">
+      <a href="#overview" className="skip-link">
+        Skip to content
+      </a>
+
+      <header className="topbar">
+        <div className="topbar-row">
+          <a href="#overview" className="brand" aria-label="Back to top">
+            <span className="brand-ticker">{personal.ticker}</span>
+            <span className="brand-name">Athallah Azhar</span>
+          </a>
+          <nav className="fn-nav" aria-label="Sections">
+            {sections.map((s) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="market-tab"
+                key={s.id}
+                href={`#${s.id}`}
+                className="fn-key"
+                aria-current={active === s.id ? "true" : undefined}
               >
-                {item}
+                <kbd>{s.code}</kbd>
+                <span>{s.label}</span>
               </a>
             ))}
           </nav>
-          <div className="session-cell">
-            <p className="text-[var(--muted)]">SESSION</p>
-            <p className="font-bold text-[var(--positive)]">LIVE / ASIA-JKT</p>
-          </div>
+          <JakartaClock />
         </div>
-
-        <div className="ticker-tape text-[11px] uppercase">
-          <div className="ticker-track">
-            {[...portfolioData.terminalTape, ...portfolioData.terminalTape].map(
-              (item, index) => (
-                <span key={`${item.label}-${index}`} className="ticker-item">
-                  <span className="text-[var(--muted)]">{item.label}</span>
-                  <span className="text-white">{item.value}</span>
-                  <span className="text-[var(--positive)]">{item.trend}</span>
-                </span>
-              ),
-            )}
-          </div>
-        </div>
+        <Ticker />
       </header>
 
-      <section id="overview" className="terminal-grid hero-grid">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={panelIn}
-          transition={{ duration: 0.4 }}
-          className="terminal-panel p-4 sm:p-6 lg:p-8"
-        >
-          <div className="terminal-chip-row">
-            <span className="terminal-chip bg-[var(--terminal-amber)] text-black">
-              Equity Research Note
-            </span>
-            <span className="terminal-chip">Data desk active</span>
-            <span className="terminal-chip text-[var(--jp-pink)]">
-              {portfolioData.japanese.market}
-            </span>
-          </div>
+      <main>
+        <Hero />
+        <Experience />
+        <Projects />
+        <SkillsAndEducation />
+        <Contact />
+      </main>
 
-          <div className="mt-7 grid gap-6 xl:grid-cols-[1fr_320px]">
-            <div>
-              <p className="mb-3 text-xs uppercase tracking-[0.28em] text-[var(--terminal-amber)]">
-                {portfolioData.personal.alias}
-              </p>
-              <h1 className="hero-title">{portfolioData.personal.name}</h1>
-              <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--foreground)] sm:text-base md:text-lg">
-                {portfolioData.personal.summary}
-              </p>
-            </div>
+      <footer className="footer">
+        <span>
+          © {new Date().getFullYear()} Athallah Azhar Aulia Hadi
+        </span>
+        <span className="mono">Built with Next.js. Not investment advice.</span>
+      </footer>
+    </div>
+  );
+}
 
-            <MediaFrame
-              media={portfolioData.personal.media}
-              ratio="portrait"
-              kicker="PROFILE_MEDIA"
-            />
-          </div>
+/* ---------- Header pieces ---------- */
 
-          <div className="mt-8 grid gap-px bg-[var(--surface-border)] sm:grid-cols-2 xl:grid-cols-4">
-            {portfolioData.kpis.map((kpi) => (
-              <div key={kpi.label} className="stat-cell">
-                <p className="text-[11px] uppercase text-[var(--muted)]">
-                  {kpi.label}
-                </p>
-                <p className="mt-2 text-2xl font-black text-white">
-                  {kpi.value}
-                </p>
-                <p className="mt-2 text-xs leading-5 text-[var(--foreground)]">
-                  {kpi.detail}
-                </p>
-              </div>
+function JakartaClock() {
+  const [now, setNow] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Asia/Jakarta",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    });
+    const tick = () => setNow(fmt.format(new Date()));
+    tick();
+    const id = window.setInterval(tick, 1000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  return (
+    <div className="clock" aria-label="Local time in Jakarta">
+      <span className="clock-zone">JKT</span>
+      <span className="clock-time">{now ?? "--:--:--"}</span>
+      <span className="clock-zone">WIB</span>
+    </div>
+  );
+}
+
+function Ticker() {
+  const items = portfolioData.terminalTape;
+  return (
+    <div className="ticker" aria-label="Highlights">
+      <div className="ticker-track">
+        {[0, 1].map((copy) => (
+          <ul key={copy} className="ticker-list" aria-hidden={copy === 1}>
+            {items.map((item) => (
+              <li key={`${copy}-${item.label}`}>
+                <span className="t-label">{item.label}</span>
+                <span className="t-value">{item.value}</span>
+                <span className="t-trend">▲ {item.trend}</span>
+              </li>
             ))}
-          </div>
+          </ul>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-          <div className="mt-8 grid gap-px bg-[var(--surface-border)] lg:grid-cols-[1fr_auto_auto]">
-            <div className="bg-[var(--surface)] p-4">
-              <p className="text-[11px] uppercase text-[var(--muted)]">
-                Current Thread
-              </p>
-              <p className="mt-2 text-sm leading-6 text-white">
-                {portfolioData.personal.currentThread}
-              </p>
-            </div>
-            <a
-              href={portfolioData.personal.cv}
-              className="action-cell"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Download className="h-4 w-4" />
-              CV
+/* ---------- Hero ---------- */
+
+function Hero() {
+  const reduce = useReducedMotion();
+  const rise = (i: number) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 12 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.45, delay: 0.08 * i, ease: [0.2, 0.7, 0.2, 1] as const },
+        };
+
+  const photo = personal.media.find((m) => m.src);
+
+  return (
+    <section id="overview" className="hero" aria-labelledby="hero-name">
+      <div className="cmdline" aria-hidden>
+        <span className="cmd-ticker">ATHL JK</span>
+        <span className="cmd-mkt">&lt;Equity&gt;</span>
+        <span className="cmd-fn">DES</span>
+        <span className="cmd-go">&lt;GO&gt;</span>
+        <span className="caret" />
+      </div>
+
+      <div className="hero-grid">
+        <div className="hero-main">
+          <motion.p className="hero-role" {...rise(0)}>
+            {personal.role}
+          </motion.p>
+          <motion.h1 id="hero-name" className="hero-name" {...rise(1)}>
+            Athallah Azhar
+            <br />
+            Aulia Hadi
+          </motion.h1>
+          <motion.p className="hero-summary" {...rise(2)}>
+            {personal.summary}
+          </motion.p>
+
+          <motion.div className="hero-now" {...rise(3)}>
+            <span className="now-dot" aria-hidden />
+            <p>
+              <span className="now-label">Now</span>
+              {personal.currentThread}
+            </p>
+          </motion.div>
+
+          <motion.div className="hero-actions" {...rise(4)}>
+            <a href={personal.cv} className="btn btn-primary" target="_blank" rel="noreferrer">
+              <Download className="h-4 w-4" aria-hidden />
+              Download CV
             </a>
-            <a
-              href={portfolioData.personal.github}
-              className="action-cell"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <GitBranch className="h-4 w-4" />
+            <a href={personal.linkedin} className="btn" target="_blank" rel="noreferrer">
+              LinkedIn
+              <ArrowUpRight className="h-4 w-4" aria-hidden />
+            </a>
+            <a href={personal.github} className="btn" target="_blank" rel="noreferrer">
               GitHub
+              <ArrowUpRight className="h-4 w-4" aria-hidden />
             </a>
-          </div>
-        </motion.div>
-
-        <motion.aside
-          initial="hidden"
-          animate="visible"
-          variants={panelIn}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="terminal-panel p-4 sm:p-5"
-        >
-          <PanelTitle icon={<Radio className="h-4 w-4" />} label="Market Pulse" />
-          <div className="mt-5 space-y-3">
-            {[
-              ["FOCUS", "Financial data product strategy"],
-              ["MODEL", "ML, NLP, CV, Decision Support"],
-              ["STACK", "Python, SQL, Streamlit, VBA"],
-              ["LOCATION", portfolioData.personal.location],
-            ].map(([label, value]) => (
-              <div key={label} className="quote-row">
-                <span>{label}</span>
-                <strong>{value}</strong>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 terminal-card p-4">
-            <div className="flex items-center justify-between gap-4 border-b border-[var(--surface-border)] pb-3">
-              <div>
-                <p className="text-[11px] uppercase text-[var(--muted)]">
-                  Language Alpha
-                </p>
-                <p className="font-bold text-white">JLPT N2 Certified</p>
-              </div>
-              <Languages className="h-5 w-5 text-[var(--jp-pink)]" />
-            </div>
-            <p className="mt-5 text-5xl font-black text-[var(--jp-pink)]">
-              {portfolioData.japanese.headline}
-            </p>
-            <p className="mt-3 text-sm leading-6 text-[var(--foreground)]">
-              {portfolioData.japanese.motto}
-            </p>
-          </div>
-
-          <div className="mt-6 grid gap-px bg-[var(--surface-border)]">
-            {portfolioData.japanese.watchlist.map((item) => (
-              <div key={item.romaji} className="jp-signal-row">
-                <span className="text-2xl font-black text-[var(--jp-pink)]">
-                  {item.term}
-                </span>
-                <div>
-                  <p className="font-bold uppercase text-white">{item.romaji}</p>
-                  <p className="text-xs text-[var(--muted)]">{item.meaning}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.aside>
-      </section>
-
-      <section className="terminal-grid social-grid">
-        <div className="terminal-panel p-4 sm:p-5">
-          <PanelTitle icon={<GitBranch className="h-4 w-4" />} label="Social Tickers" />
-          <div className="mt-4 grid gap-px bg-[var(--surface-border)] md:grid-cols-3">
-            {portfolioData.socialLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith("mailto:") ? undefined : "_blank"}
-                rel={link.href.startsWith("mailto:") ? undefined : "noreferrer"}
-                className="social-card"
-              >
-                <div>
-                  <p className="text-xs uppercase text-[var(--muted)]">
-                    {link.status}
-                  </p>
-                  <p className="mt-1 font-black text-white">{link.label}</p>
-                  <p className="mt-2 text-xs text-[var(--foreground)]">
-                    {link.handle}
-                  </p>
-                </div>
-                <ArrowUpRight className="h-4 w-4 text-[var(--terminal-amber)]" />
-              </a>
-            ))}
-          </div>
+          </motion.div>
         </div>
-      </section>
 
-      <section id="experience" className="terminal-grid">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={panelIn}
-          className="terminal-panel"
-        >
-          <PanelHeader
-            icon={<BriefcaseBusiness className="h-4 w-4" />}
-            label="Experience Blotter"
-            code="EXP"
-            jp={portfolioData.japanese.desk}
-          />
-          <div className="blotter-list">
-            {portfolioData.experience.map((item) => (
-              <article key={item.id} className="experience-card">
-                <MediaFrame media={item.media} ratio="wide" kicker={item.id} />
-                <div className="min-w-0 p-4 sm:p-5">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div>
-                      <p className="text-[11px] uppercase text-[var(--terminal-amber)]">
-                        {item.id} / {item.company}
-                      </p>
-                      <h2 className="mt-1 text-xl font-black text-white">
-                        {item.title}
-                      </h2>
-                      <p className="mt-1 text-xs text-[var(--muted)]">
-                        {item.period}
-                      </p>
-                    </div>
-                    <span className={getStatusClass(item.status)}>
-                      {item.status}
-                    </span>
-                  </div>
-                  <div className="mt-4 space-y-2">
-                    {item.descriptions.map((desc) => (
-                      <p key={desc} className="terminal-line">
-                        {desc}
-                      </p>
+        <motion.aside className="hero-side" {...rise(2)}>
+          {photo ? (
+            <figure className="portrait">
+              <NextImage
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 380px"
+                className="portrait-img"
+              />
+              <figcaption className="portrait-cap mono">
+                <span>{personal.ticker}</span>
+                <span>{personal.alias.split("/").pop()?.trim()}</span>
+              </figcaption>
+            </figure>
+          ) : null}
+          <dl className="pulse">
+            {pulse.map(([k, v]) => (
+              <div key={k} className="pulse-row">
+                <dt>{k}</dt>
+                <dd>{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </motion.aside>
+      </div>
+
+      <dl className="kpis">
+        {portfolioData.kpis.map((kpi) => (
+          <div key={kpi.label} className="kpi">
+            <dt className="kpi-label">{kpi.label}</dt>
+            <dd className="kpi-value">{kpi.value}</dd>
+            <dd className="kpi-detail">{kpi.detail}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
+}
+
+/* ---------- Experience ---------- */
+
+function Experience() {
+  return (
+    <section id="experience" className="block" aria-labelledby="exp-title">
+      <SectionHead
+        code="EXP"
+        id="exp-title"
+        title="Experience"
+        note={`${portfolioData.experience.length} positions`}
+      />
+      <ol className="blotter">
+        {portfolioData.experience.map((item) => {
+          const status = statusMeta[item.status.toUpperCase()] ?? {
+            label: item.status,
+            tone: "flat",
+          };
+          const image = item.media.find((m) => m.src);
+          return (
+            <li key={item.id} className="trade">
+              <div className="trade-meta">
+                <span className="mono trade-period">{item.period}</span>
+                <span className={`status status-${status.tone}`}>{status.label}</span>
+              </div>
+              <div className="trade-body">
+                <p className="trade-company">{item.company}</p>
+                <h3 className="trade-title">{item.title}</h3>
+                <ul className="trade-notes">
+                  {item.descriptions.map((d) => (
+                    <li key={d}>{d}</li>
+                  ))}
+                </ul>
+              </div>
+              {image ? (
+                <div className="trade-media">
+                  <NextImage src={image.src} alt={image.alt} fill sizes="240px" className="cover" />
+                </div>
+              ) : null}
+            </li>
+          );
+        })}
+      </ol>
+    </section>
+  );
+}
+
+/* ---------- Projects ---------- */
+
+function Projects() {
+  return (
+    <section id="projects" className="block" aria-labelledby="prj-title">
+      <SectionHead
+        code="PRJ"
+        id="prj-title"
+        title="Projects"
+        note="Selected work"
+      />
+      <div className="projects">
+        {portfolioData.projects.map((p) => {
+          const image = p.media.find((m) => m.src);
+          return (
+            <article key={p.id} className="project">
+              <div className="project-chart">
+                {image ? (
+                  <NextImage src={image.src} alt={image.alt} fill sizes="(max-width: 768px) 100vw, 50vw" className="cover" />
+                ) : (
+                  <Sparkline seed={p.id} />
+                )}
+                <span className="project-id mono">{p.id}</span>
+                <span className="project-signal mono">{p.signal}</span>
+              </div>
+              <div className="project-body">
+                <p className="project-period mono">{p.period}</p>
+                <h3 className="project-title">{p.title}</h3>
+                <p className="project-text">{p.thesis}</p>
+                <ul className="tags" aria-label="Tools">
+                  {p.stack.split(",").map((t) => (
+                    <li key={t}>{t.trim()}</li>
+                  ))}
+                </ul>
+                {p.links.length ? (
+                  <div className="project-links">
+                    {p.links.map((l) => (
+                      <a key={l.href} href={l.href} target="_blank" rel="noreferrer">
+                        {l.label}
+                        <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
+                      </a>
                     ))}
                   </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      <section id="projects" className="terminal-grid project-grid">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={panelIn}
-          className="terminal-panel"
-        >
-          <PanelHeader
-            icon={<BarChart3 className="h-4 w-4" />}
-            label="Project Watchlist"
-            code="PRJ"
-            jp={portfolioData.japanese.desk}
-          />
-          <div className="project-board">
-            {portfolioData.projects.map((project) => (
-              <article key={project.id} className="project-card">
-                <MediaFrame media={project.media} ratio="wide" kicker={project.id} />
-                <div className="p-4">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-[11px] text-[var(--terminal-amber)]">
-                        {project.id} / {project.stack}
-                      </p>
-                      <h2 className="mt-1 text-lg font-black text-white">
-                        {project.title}
-                      </h2>
-                    </div>
-                    <span className="signal-pill">{project.signal}</span>
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-[var(--foreground)]">
-                    {project.thesis}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      <section className="terminal-grid bottom-grid">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={panelIn}
-          id="skills"
-          className="terminal-panel"
-        >
-          <PanelHeader
-            icon={<Terminal className="h-4 w-4" />}
-            label="Skill Heatmap"
-            code="SKL"
-            jp={portfolioData.japanese.desk}
-          />
-          <div className="grid gap-px bg-[var(--surface-border)] sm:grid-cols-2">
-            {Object.entries(portfolioData.skills).map(([category, skills]) => (
-              <div key={category} className="skill-panel">
-                <div className="mb-4 flex items-center justify-between">
-                  <h2 className="font-black uppercase text-white">{category}</h2>
-                  <Activity className="h-4 w-4 text-[var(--positive)]" />
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {skills.map((skill) => (
-                    <span key={skill} className="skill-chip">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
+                ) : null}
               </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={panelIn}
-          className="terminal-panel"
-        >
-          <PanelHeader
-            icon={<GraduationCap className="h-4 w-4" />}
-            label="Education & Awards"
-            code="EDU"
-            jp={portfolioData.japanese.desk}
-          />
-          <div className="grid gap-px bg-[var(--surface-border)]">
-            {portfolioData.education.map((item) => (
-              <div key={item.title} className="bg-[var(--surface)] p-5">
-                <p className="text-xs uppercase text-[var(--muted)]">
-                  {item.period}
-                </p>
-                <h2 className="mt-2 text-xl font-black text-white">
-                  {item.title}
-                </h2>
-                <p className="mt-1 text-sm text-[var(--foreground)]">
-                  {item.subtitle}
-                </p>
-                <p className="mt-3 font-bold text-[var(--positive)]">
-                  {item.meta}
-                </p>
-              </div>
-            ))}
-          </div>
-          <div className="p-5">
-            <p className="mb-3 text-xs uppercase text-[var(--terminal-amber)]">
-              Honors
-            </p>
-            <div className="space-y-2">
-              {portfolioData.awards.map((award) => (
-                <p key={award} className="flex gap-2 text-sm text-white">
-                  <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-[var(--jp-pink)]" />
-                  {award}
-                </p>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      <section id="media" className="terminal-grid">
-        <div className="terminal-panel p-4 sm:p-5">
-          <PanelTitle icon={<BookOpenText className="h-4 w-4" />} label="Media Template" />
-          <div className="mt-4 grid gap-px bg-[var(--surface-border)] md:grid-cols-2 xl:grid-cols-4">
-            {portfolioData.mediaGuide.map((path) => (
-              <div key={path} className="media-guide-cell">
-                <ImageIcon className="h-5 w-5 text-[var(--terminal-amber)]" />
-                <p className="mt-3 break-all text-xs leading-5 text-white">
-                  {path}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="waifu" className="terminal-grid waifu-grid">
-        <div className="terminal-panel p-4 sm:p-5">
-          <PanelTitle icon={<Sparkles className="h-4 w-4" />} label="Waifu Archive" />
-          <div className="mt-4 grid gap-px bg-[var(--surface-border)] md:grid-cols-2 xl:grid-cols-3">
-            {portfolioData.waifuGallery.items.map((waifu) => (
-              <div key={waifu.name} className="waifu-card">
-                <MediaFrame media={waifu.media} ratio="portrait" kicker={waifu.name} />
-              </div>
-            ))}
-            <div className="waifu-card">
-              <MediaFrame
-                media={portfolioData.waifuGallery.realWaifu.media}
-                ratio="portrait"
-                kicker={portfolioData.waifuGallery.realWaifu.name}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-  );
-}
-
-function PanelTitle({ icon, label }: { icon: ReactNode; label: string }) {
-  return (
-    <div className="terminal-title">
-      <span className="text-[var(--positive)]">{icon}</span>
-      {label}
-    </div>
-  );
-}
-
-function PanelHeader({
-  icon,
-  label,
-  code,
-  jp,
-}: {
-  icon: ReactNode;
-  label: string;
-  code: string;
-  jp: string;
-}) {
-  return (
-    <div className="panel-header">
-      <div className="flex items-center gap-2 font-bold text-[var(--terminal-amber)]">
-        {icon}
-        {label}
+            </article>
+          );
+        })}
       </div>
-      <div className="flex items-center gap-2 text-[var(--muted)]">
-        <BadgeJapaneseYen className="h-4 w-4 text-[var(--jp-pink)]" />
-        {code} / {jp}
-      </div>
-    </div>
+    </section>
   );
 }
 
-function MediaFrame({
-  media,
-  ratio = "wide",
-  kicker,
-  autoRotateMs = AUTO_ROTATE_MS,
-}: {
-  media: MediaItem[];
-  ratio?: "wide" | "portrait";
-  kicker: string;
-  autoRotateMs?: number;
-}) {
-  const items = useMemo(
-    () =>
-      media.length
-        ? media
-        : [
-            {
-              src: "",
-              alt: "Media placeholder",
-              caption: "",
-              slot: "MEDIA_SLOT",
-            },
-          ],
-    [media],
-  );
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    if (items.length <= 1) {
-      return undefined;
+function Sparkline({ seed }: { seed: string }) {
+  const { line, area } = useMemo(() => {
+    let h = 2166136261;
+    for (const ch of seed) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+    const rand = () => {
+      h = Math.imul(h ^ (h >>> 15), 2246822507);
+      h = Math.imul(h ^ (h >>> 13), 3266489909);
+      return ((h ^= h >>> 16) >>> 0) / 4294967296;
+    };
+    const n = 32;
+    const pts: number[] = [];
+    let v = 0.35 + rand() * 0.2;
+    for (let i = 0; i < n; i++) {
+      v += (rand() - 0.42) * 0.12;
+      v = Math.min(0.72, Math.max(0.12, v));
+      pts.push(v);
     }
-
-    const intervalId = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % items.length);
-    }, autoRotateMs);
-
-    return () => window.clearInterval(intervalId);
-  }, [items.length, autoRotateMs]);
-
-  useEffect(() => {
-    setActiveIndex((current) => (items.length ? current % items.length : 0));
-  }, [items.length]);
-
-  const activeItem = items[activeIndex] ?? items[0];
-  const hasImage = Boolean(activeItem.src);
+    const coords = pts.map((y, i) => `${(i / (n - 1)) * 300},${(1 - y) * 100}`);
+    return {
+      line: coords.join(" "),
+      area: `0,100 ${coords.join(" ")} 300,100`,
+    };
+  }, [seed]);
 
   return (
-    <figure className={`media-frame media-frame-${ratio}`}>
-      {hasImage ? (
-        <div className="media-image-wrap">
-          <NextImage
-            key={`${activeItem.src || activeItem.slot}-${activeIndex}`}
-            src={activeItem.src}
-            alt={activeItem.alt}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 60vw, 420px"
-            quality={90}
-            className="media-image media-slide"
-          />
-        </div>
-      ) : (
-        <div className="media-placeholder">
-          <ImageIcon className="h-6 w-6 text-[var(--terminal-amber)]" />
-          <p className="mt-3 text-xs font-black uppercase text-white">
-            {activeItem.slot}
-          </p>
-          <p className="mt-2 break-all text-[11px] leading-5 text-[var(--muted)]">
-            {activeItem.caption}
-          </p>
-        </div>
-      )}
-      <figcaption className="media-caption">
-        <span>{kicker}</span>
-        <span>{hasImage ? activeItem.alt : activeItem.slot}</span>
-      </figcaption>
-    </figure>
+    <svg className="spark" viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden>
+      {[25, 50, 75].map((y) => (
+        <line key={y} x1="0" x2="300" y1={y} y2={y} className="spark-grid" />
+      ))}
+      <polygon points={area} className="spark-area" />
+      <polyline points={line} className="spark-line" vectorEffect="non-scaling-stroke" />
+    </svg>
   );
+}
+
+/* ---------- Skills & education ---------- */
+
+function SkillsAndEducation() {
+  const jp = portfolioData.japanese;
+  return (
+    <section id="skills" className="block" aria-labelledby="skl-title">
+      <SectionHead code="SKL" id="skl-title" title="Skills and education" />
+      <div className="split">
+        <div className="skills">
+          {Object.entries(portfolioData.skills).map(([cat, list]) => (
+            <div key={cat} className="skill-group">
+              <h3 className="group-title">{cat}</h3>
+              <ul className="tags">
+                {list.map((s) => (
+                  <li key={s}>{s}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          <div className="jp-panel">
+            <div className="jp-head">
+              <span className="jp-big" lang="ja">
+                {jp.headline}
+              </span>
+              <div>
+                <p className="jp-title">JLPT N2</p>
+                <p className="jp-motto" lang="ja">
+                  {jp.motto}
+                </p>
+              </div>
+            </div>
+            <dl className="jp-words">
+              {jp.watchlist.map((w) => (
+                <div key={w.romaji}>
+                  <dt lang="ja">{w.term}</dt>
+                  <dd>
+                    <span className="mono">{w.romaji}</span>
+                    {w.meaning}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+
+        <div className="edu">
+          <ol className="edu-list">
+            {portfolioData.education.map((e) => (
+              <li key={e.title} className="edu-item">
+                <span className="mono edu-period">{e.period}</span>
+                <h3 className="edu-title">{e.title}</h3>
+                <p className="edu-sub">{e.subtitle}</p>
+                <p className="mono edu-meta">{e.meta}</p>
+              </li>
+            ))}
+          </ol>
+          <h3 className="group-title">Honors</h3>
+          <ul className="awards">
+            {portfolioData.awards.map((a) => (
+              <li key={a}>{a}</li>
+            ))}
+          </ul>
+          <h3 className="group-title group-gap">Certifications</h3>
+          <ul className="awards">
+            {portfolioData.certifications.map((c) => (
+              <li key={c}>{c}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Contact ---------- */
+
+function Contact() {
+  return (
+    <section id="contact" className="block contact" aria-labelledby="cnt-title">
+      <SectionHead code="CNT" id="cnt-title" title="Contact" />
+      <div className="contact-grid">
+        <div>
+          <p className="contact-lead">
+            Open to internships and projects in data, AI, and financial products.
+          </p>
+          <a href={`mailto:${personal.email}`} className="contact-mail">
+            {personal.email}
+          </a>
+        </div>
+        <ul className="socials">
+          {portfolioData.socialLinks
+            .filter((l) => !l.href.startsWith("mailto:"))
+            .map((l) => {
+            const external = !l.href.startsWith("mailto:");
+            return (
+              <li key={l.label}>
+                <a
+                  href={l.href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noreferrer" : undefined}
+                  className="social"
+                >
+                  <span className="social-icon">{socialIcon[l.label] ?? <ArrowUpRight className="h-4 w-4" />}</span>
+                  <span className="social-label">{l.label}</span>
+                  <span className="social-handle mono">{l.handle}</span>
+                  <ArrowUpRight className="social-arrow h-4 w-4" aria-hidden />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Shared ---------- */
+
+function SectionHead({
+  code,
+  id,
+  title,
+  note,
+}: {
+  code: string;
+  id: string;
+  title: string;
+  note?: string;
+}) {
+  return (
+    <div className="section-head">
+      <kbd className="section-code">{code}</kbd>
+      <h2 id={id} className="section-title">
+        {title}
+      </h2>
+      {note ? <span className="section-note mono">{note}</span> : null}
+    </div>
+  );
+}
+
+function useActiveSection() {
+  const [active, setActive] = useState("overview");
+  useEffect(() => {
+    const els = sections
+      .map((s) => document.getElementById(s.id))
+      .filter((el): el is HTMLElement => Boolean(el));
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) setActive(visible[0].target.id);
+      },
+      { rootMargin: "-35% 0px -55% 0px" },
+    );
+    els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+  return active;
 }
