@@ -62,7 +62,7 @@ export default async function Home() {
               </p>
             </div>
             <div className="hero-actions rise" style={{ "--d": 5 } as React.CSSProperties}>
-              <a href={personal.cv} className="btn btn-primary" target="_blank" rel="noreferrer">
+              <a href={personal.cv} data-cursor="PDF" className="btn btn-primary" target="_blank" rel="noreferrer">
                 <Download className="h-4 w-4" aria-hidden />
                 <T k="cta.cv" />
               </a>

@@ -12,6 +12,7 @@ import { CommandPalette } from "@/components/CommandPalette";
 import { Header } from "@/components/Header";
 import { LangProvider } from "@/components/LangProvider";
 import { MarketBackdrop } from "@/components/MarketBackdrop";
+import { TerminalCursor } from "@/components/TerminalCursor";
 import { projects } from "@/data/projects";
 import { siteUrl } from "@/lib/site";
 
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             </footer>
           </div>
           <CommandPalette />
+          <TerminalCursor />
         </LangProvider>
         <Analytics />
       </body>

@@ -2755,3 +2755,113 @@ html[data-boot="skip"] .boot {
     display: none;
   }
 }
+
+/* ================================================================
+   Terminal cursor (mouse only). Native cursor stays underneath.
+   ================================================================ */
+.tcursor {
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  transition: opacity 200ms;
+  z-index: 150;
+}
+.tcursor[data-visible="true"] {
+  opacity: 1;
+}
+.tcursor-h,
+.tcursor-v {
+  position: absolute;
+  will-change: transform;
+}
+.tcursor-h {
+  background: linear-gradient(90deg, transparent, rgba(255, 160, 40, 0.14) 15%, rgba(255, 160, 40, 0.14) 85%, transparent);
+  height: 1px;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+.tcursor-v {
+  background: linear-gradient(transparent, rgba(255, 160, 40, 0.1) 15%, rgba(255, 160, 40, 0.1) 85%, transparent);
+  bottom: 0;
+  left: 0;
+  top: 0;
+  width: 1px;
+}
+/* Price-axis style readout: how far down the page the pointer is, in %. */
+.tcursor-tag {
+  background: var(--amber);
+  color: var(--amber-ink);
+  font-size: 0.62rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.2rem 0.3rem;
+  position: absolute;
+  right: 0;
+  top: -0.5rem;
+  will-change: transform;
+}
+.tcursor-ring {
+  height: 0;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 0;
+  will-change: transform;
+}
+.tcursor-ring-shape {
+  border: 1px solid rgba(255, 160, 40, 0.7);
+  /* Dark halo keeps the ring visible over light screenshots and amber buttons. */
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+  height: 26px;
+  left: -13px;
+  position: absolute;
+  top: -13px;
+  transition: width 160ms var(--ease-out), height 160ms var(--ease-out), left 160ms var(--ease-out), top 160ms var(--ease-out), background 160ms, border-color 160ms;
+  width: 26px;
+}
+.tcursor[data-mode="hover"] .tcursor-ring-shape {
+  background: rgba(255, 160, 40, 0.1);
+  border-color: var(--amber);
+  height: 42px;
+  left: -21px;
+  top: -21px;
+  width: 42px;
+}
+.tcursor[data-mode="text"] .tcursor-ring-shape,
+.tcursor[data-mode="text"] .tcursor-h,
+.tcursor[data-mode="text"] .tcursor-v {
+  opacity: 0;
+}
+.tcursor[data-press="true"] .tcursor-ring-shape {
+  background: rgba(255, 160, 40, 0.25);
+}
+.tcursor-label {
+  background: var(--amber);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6);
+  color: var(--amber-ink);
+  font-size: 0.6rem;
+  font-weight: 600;
+  left: 24px;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  padding: 0.12rem 0.3rem;
+  position: absolute;
+  top: 14px;
+  transition: opacity 120ms;
+  white-space: nowrap;
+}
+.tcursor[data-mode="hover"][data-label="true"] .tcursor-label {
+  opacity: 1;
+}
+/* Fade the crosshair while hovering something clickable so the target stays clear. */
+.tcursor[data-mode="hover"] .tcursor-h,
+.tcursor[data-mode="hover"] .tcursor-v {
+  opacity: 0.4;
+}
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .tcursor {
+    display: none;
+  }
+}
