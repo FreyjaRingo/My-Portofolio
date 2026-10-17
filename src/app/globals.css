@@ -1982,8 +1982,8 @@ main .case {
   }
 }
 
-/* Tablet: portrait and pulse side by side instead of a half-empty column */
-@media (min-width: 560px) and (max-width: 1099px) {
+/* Large phones: portrait and pulse side by side instead of a half-empty column */
+@media (min-width: 560px) and (max-width: 767px) {
   .hero-side {
     align-items: center;
     gap: 1.5rem;
@@ -2337,3 +2337,53 @@ main .case {
   }
 }
 
+/* ================================================================
+   Hero balance, tablet and up
+   Text on the left, portrait and facts on the right. The portrait
+   stretches to the height of the text column, so both columns start
+   and end on the same lines at every width.
+   ================================================================ */
+@media (min-width: 768px) {
+  .hero-grid {
+    align-items: stretch;
+    column-gap: clamp(2rem, 4vw, 4rem);
+    grid-template-columns: minmax(0, 1fr) clamp(15rem, 31vw, 23.75rem);
+  }
+  .hero-main {
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-summary,
+  .hero-now {
+    max-width: 40rem;
+  }
+  .hero-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .portrait {
+    aspect-ratio: auto;
+    flex: 1 1 auto;
+    max-width: none;
+    min-height: 15rem;
+  }
+  .portrait-img {
+    object-position: 50% 20%;
+  }
+  .pulse {
+    max-width: none;
+  }
+}
+
+/* Narrow side column: label above value so long values do not wrap into ragged lines. */
+@media (min-width: 768px) and (max-width: 1099px) {
+  .pulse-row {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.45rem 0;
+  }
+  .pulse-row dd {
+    text-align: left;
+  }
+}
