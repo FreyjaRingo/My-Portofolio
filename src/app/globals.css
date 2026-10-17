@@ -2418,3 +2418,340 @@ main .case {
 ::view-transition-group(backdrop) {
   animation: none;
 }
+
+/* ================================================================
+   GitHub activity
+   ================================================================ */
+.gh {
+  border: 1px solid var(--line);
+  background: rgba(12, 11, 9, 0.72);
+}
+.gh-stats {
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.gh-stats .kpi:nth-child(2n) {
+  border-right: 0;
+}
+.gh-stats .kpi:nth-last-child(-n + 2) {
+  border-bottom: 0;
+}
+.gh-heat {
+  border-bottom: 1px solid var(--line);
+  margin: 0;
+  padding: 1rem 1rem 0.75rem;
+}
+.gh-heat > svg {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+.gh-axis {
+  fill: var(--muted);
+  font-family: var(--mono);
+  font-size: 8px;
+}
+.gh-l0 {
+  fill: var(--panel-2);
+  stroke: var(--line-soft);
+  stroke-width: 0.5;
+}
+.gh-l1 {
+  fill: rgba(255, 160, 40, 0.28);
+}
+.gh-l2 {
+  fill: rgba(255, 160, 40, 0.5);
+}
+.gh-l3 {
+  fill: rgba(255, 160, 40, 0.75);
+}
+.gh-l4 {
+  fill: var(--amber);
+}
+.gh-heat rect:hover {
+  stroke: var(--text);
+  stroke-width: 1;
+}
+.gh-scale {
+  align-items: center;
+  color: var(--muted);
+  display: flex;
+  font-size: 0.7rem;
+  gap: 0.25rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+.gh-scale span,
+.gh-scale svg {
+  flex: none;
+}
+.gh-lower {
+  display: grid;
+}
+.gh-langs,
+.gh-repos {
+  padding: 1.1rem;
+}
+.gh-langs {
+  border-bottom: 1px solid var(--line);
+}
+.gh-sub {
+  color: var(--muted);
+  font-size: 0.72rem;
+  margin-bottom: 0.75rem;
+}
+.gh-bar {
+  display: flex;
+  gap: 2px;
+  height: 0.6rem;
+}
+.gh-bar span {
+  flex-basis: 0;
+  min-width: 4px;
+}
+.gh-legend {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+}
+.gh-legend li {
+  align-items: center;
+  display: flex;
+  font-size: 0.88rem;
+  gap: 0.5rem;
+}
+.gh-dot {
+  height: 0.55rem;
+  width: 0.55rem;
+}
+.gh-pct {
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-left: auto;
+}
+.gh-repos ul {
+  display: grid;
+  gap: 0.5rem;
+}
+.gh-repo {
+  border: 1px solid var(--line-soft);
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.65rem 0.75rem;
+  transition: border-color 120ms;
+}
+.gh-repo:hover {
+  border-color: var(--amber);
+}
+.gh-repo-name {
+  color: var(--amber);
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+.gh-repo-desc {
+  color: var(--text-2);
+  display: -webkit-box;
+  font-size: 0.85rem;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.gh-repo-meta {
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.72rem;
+  gap: 0.25rem 0.9rem;
+}
+.gh-repo-meta span {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.25rem;
+}
+.gh-foot {
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.72rem;
+  gap: 0.4rem 1rem;
+  justify-content: space-between;
+  padding: 0.75rem 1.1rem;
+}
+.gh-foot a {
+  color: var(--amber);
+}
+.gh-fallback {
+  align-items: center;
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 1.25rem;
+}
+@media (min-width: 768px) {
+  .gh-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .gh-stats .kpi {
+    border-bottom: 0;
+  }
+  .gh-stats .kpi:nth-child(2n) {
+    border-right: 1px solid var(--line);
+  }
+  .gh-stats .kpi:last-child {
+    border-right: 0;
+  }
+  .gh-lower {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+  }
+  .gh-langs {
+    border-bottom: 0;
+    border-right: 1px solid var(--line);
+  }
+  .gh-repos ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+/* On phones a full year squeezes cells too small; show the latest ~half year and let it scroll. */
+@media (max-width: 639px) {
+  .gh-heat {
+    /* rtl makes the scroll start at the latest weeks; children stay ltr. */
+    direction: rtl;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .gh-heat > * {
+    direction: ltr;
+  }
+  .gh-heat > svg {
+    min-width: 600px;
+  }
+}
+
+/* ================================================================
+   Boot intro (first visit per session)
+   Timeline: lines type in 0.1 to 0.75 s, bar fills to 0.95 s,
+   overlay wipes up 0.95 to 1.3 s. data-boot="skip" hides it before paint.
+   ================================================================ */
+.boot {
+  animation: boot-out 0.35s var(--ease-out) 0.95s forwards;
+  background: var(--bg);
+  display: grid;
+  inset: 0;
+  place-items: center;
+  position: fixed;
+  z-index: 200;
+}
+.boot.boot-done {
+  animation: boot-out 0.25s var(--ease-out) forwards;
+}
+.boot.boot-gone,
+html[data-boot="skip"] .boot {
+  display: none;
+}
+@keyframes boot-out {
+  to {
+    clip-path: inset(0 0 100% 0);
+    visibility: hidden;
+  }
+}
+.boot-box {
+  font-size: clamp(0.78rem, 2.6vw, 0.95rem);
+  max-width: 34rem;
+  padding: 0 var(--gutter);
+  width: 100%;
+}
+.boot-cmd {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  padding: 0.45rem 0.75rem;
+}
+.boot-ticker {
+  font-weight: 600;
+}
+.boot-amber {
+  color: var(--amber);
+}
+.boot-go {
+  background: var(--up);
+  color: #00170a;
+  padding: 0 0.25rem;
+}
+.boot-lines {
+  display: grid;
+  gap: 0.45rem;
+}
+.boot-lines li {
+  align-items: baseline;
+  animation: boot-line 0.18s steps(1) forwards;
+  animation-delay: calc(0.1s + var(--i) * 0.2s);
+  color: var(--text-2);
+  display: flex;
+  gap: 0.6rem;
+  opacity: 0;
+}
+@keyframes boot-line {
+  to {
+    opacity: 1;
+  }
+}
+.boot-prompt {
+  color: var(--amber);
+}
+.boot-text {
+  white-space: nowrap;
+}
+.boot-dots {
+  border-bottom: 1px dotted var(--line);
+  flex: 1;
+  min-width: 1rem;
+  transform: translateY(-0.25em);
+}
+.boot-ok {
+  animation: boot-line 0.1s steps(1) forwards;
+  animation-delay: calc(0.22s + var(--i) * 0.2s);
+  color: var(--up);
+  font-weight: 600;
+  opacity: 0;
+}
+.boot-bar {
+  background: var(--line-soft);
+  height: 2px;
+  margin-top: 1.4rem;
+  overflow: hidden;
+}
+.boot-bar span {
+  animation: boot-bar 0.85s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+  background: var(--amber);
+  display: block;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+@keyframes boot-bar {
+  to {
+    transform: scaleX(1);
+  }
+}
+.boot-hint {
+  color: var(--muted);
+  font-size: 0.7rem;
+  margin-top: 0.8rem;
+}
+@media (hover: none) {
+  .boot-hint {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .boot {
+    display: none;
+  }
+}

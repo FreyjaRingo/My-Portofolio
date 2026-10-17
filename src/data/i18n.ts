@@ -38,6 +38,8 @@ export const dict = {
   "section.projects": { en: "Projects", ja: "プロジェクト" },
   "section.projectsNote": { en: "Case studies", ja: "ケーススタディ" },
   "section.lab": { en: "Lab", ja: "ラボ" },
+  "section.github": { en: "GitHub activity", ja: "GitHub アクティビティ" },
+  "section.githubNote": { en: "Live from GitHub", ja: "GitHub から自動更新" },
   "section.skills": { en: "Skills and education", ja: "スキルと学歴" },
   "section.contact": { en: "Contact", ja: "連絡先" },
 

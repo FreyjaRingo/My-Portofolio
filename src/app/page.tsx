@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AtSign, Download, GitBranch, Link2, Mail } from "lucide-react";
 import type { ReactNode } from "react";
 import { ExperienceList } from "@/components/ExperienceList";
+import { GithubActivity } from "@/components/GithubActivity";
 import { HeroCommand } from "@/components/HeroCommand";
 import { T } from "@/components/LangProvider";
 import { ProjectGrid } from "@/components/ProjectGrid";
@@ -26,7 +27,10 @@ const socialIcon: Record<string, ReactNode> = {
   Instagram: <AtSign className="h-4 w-4" aria-hidden />,
 };
 
-export default function Home() {
+// Rebuild the page in the background at most every 6 hours so GitHub activity stays fresh.
+export const revalidate = 21600;
+
+export default async function Home() {
   const photo = personal.media.find((m) => m.src);
 
   return (
@@ -111,6 +115,11 @@ export default function Home() {
       <section id="projects" className="block" aria-labelledby="prj-title">
         <SectionHead code="PRJ" id="prj-title" k="section.projects" noteKey="section.projectsNote" />
         <ProjectGrid />
+      </section>
+
+      <section id="github" className="block" aria-labelledby="git-title">
+        <SectionHead code="GIT" id="git-title" k="section.github" noteKey="section.githubNote" />
+        <GithubActivity />
       </section>
 
       <section id="lab" className="block" aria-labelledby="lab-title">

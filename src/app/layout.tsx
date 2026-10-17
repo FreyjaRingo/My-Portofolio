@@ -7,10 +7,12 @@ import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "@fontsource/ibm-plex-mono/600.css";
 import "./globals.css";
+import { BootIntro, BOOT_GATE } from "@/components/BootIntro";
 import { CommandPalette } from "@/components/CommandPalette";
 import { Header } from "@/components/Header";
 import { LangProvider } from "@/components/LangProvider";
 import { MarketBackdrop } from "@/components/MarketBackdrop";
+import { projects } from "@/data/projects";
 import { siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -36,8 +38,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+      <head>
+        {/* Decides before first paint whether the boot intro plays (once per session). */}
+        <script dangerouslySetInnerHTML={{ __html: BOOT_GATE }} />
+      </head>
       <body className="min-h-full">
+        <BootIntro projects={projects.length} />
         <LangProvider>
           <MarketBackdrop />
           <div className="site">

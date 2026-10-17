@@ -57,6 +57,7 @@ export function CommandPalette() {
       { id: "des", code: "DES", label: "Overview", hint: "Summary and current role", group: "Go to", href: "/#overview" },
       { id: "exp", code: "EXP", label: "Experience", hint: "Danamon, Maybank, and more", group: "Go to", keywords: "work job intern", href: "/#experience" },
       { id: "prj", code: "PRJ", label: "Projects", hint: `${projects.length} case studies`, group: "Go to", keywords: "portfolio work", href: "/#projects" },
+      { id: "git", code: "GIT", label: "GitHub activity", hint: "Contributions and recent repositories", group: "Go to", keywords: "github commits code repos", href: "/#github" },
       { id: "lab", code: "LAB", label: "Fund Monitor demo", hint: "Interactive dashboard, synthetic data", group: "Go to", keywords: "mutual fund reksa dana dashboard demo", href: "/lab/fund-monitor" },
       { id: "skl", code: "SKL", label: "Skills and education", hint: "Stack, degree, certifications", group: "Go to", keywords: "jlpt toefl unpad", href: "/#skills" },
       { id: "cnt", code: "CNT", label: "Contact", hint: personal.email, group: "Go to", keywords: "email hire", href: "/#contact" },
