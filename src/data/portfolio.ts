@@ -73,7 +73,7 @@ export const portfolioData = {
     { label: "TOEFL", value: "600", trend: "+BILINGUAL" },
     { label: "MAYBANK", value: "CLOSED", trend: "STRAT" },
     { label: "BCA", value: "SCHOLAR", trend: "2025" },
-    { label: "PROJECTS", value: "7", trend: "CASE STUDIES" },
+    { label: "PROJECTS", value: "8", trend: "CASE STUDIES" },
   ],
   kpis: [
     { label: "Current desk", value: "Danamon", detail: "Data Innovation & AI intern" },

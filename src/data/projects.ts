@@ -1,9 +1,10 @@
 // Case-study content. Every claim here comes from Athallah's LinkedIn project
-// descriptions or CV. Do not add numbers or outcomes that are not in those sources.
+// descriptions, CV, or (for poc-llm-mysql) the project's own README and
+// evaluation tables. Do not add numbers or outcomes that are not in those sources.
 
 const img = (name: string) => `/portfolio-media/projects/${name}.webp`;
 
-export type Domain = "Data Engineering" | "Machine Learning" | "NLP" | "Web" | "Product";
+export type Domain = "LLM" | "Data Engineering" | "Machine Learning" | "NLP" | "Web" | "Product";
 
 export type ProjectImage = { src: string; alt: string; width: number; height: number; caption?: string };
 
@@ -30,6 +31,50 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    slug: "poc-llm-mysql",
+    code: "LLM",
+    title: "LLM x MySQL: Asking a Database in Plain Language",
+    tagline: "A vendor-independent PoC to learn where text-to-SQL works, where it breaks, and what keeps it safe.",
+    period: "Oct 2026",
+    year: 2026,
+    role: "Design, build, and evaluation",
+    team: "Team project",
+    context: "Internship PoC, Bank Danamon. Public classicmodels dataset only",
+    domains: ["LLM", "Machine Learning"],
+    stack: ["Python", "DeepSeek", "MySQL", "sqlglot", "Streamlit", "pandas", "Altair", "NumPy"],
+    signal: { label: "Test questions", value: "22/22" },
+    cover: { src: img("llm-sql-answer"), alt: "Agent answer naming the customer with the largest receivable and a business-rule warning to hold new offers", width: 800, height: 310 },
+    gallery: [
+      { src: img("llm-sql-steps"), alt: "Agent steps: SQL safety checks, the generated SQL with its stated assumptions, and the reason for each tool call", width: 800, height: 680, caption: "Every answer is auditable: safety checks, the SQL with its assumptions, and why each tool was chosen" },
+      { src: img("llm-sql-ringkasan"), alt: "Sales summary dashboard with monthly sales, sales by product line, top customers, and sales reps", width: 1440, height: 900, caption: "Summary dashboard, computed in Python from the read-only user" },
+      { src: img("llm-sql-rekomendasi"), alt: "Product recommendation page comparing five methods for one customer", width: 1440, height: 900, caption: "Five recommendation methods side by side, with the business rule that can hold an offer" },
+    ],
+    links: [{ label: "Code", href: "https://github.com/FreyjaRingo/poc-llm-mysql" }],
+    problem:
+      "Vendors pitch \"chat with your database\" as a solved problem. Before evaluating them, the team needed first-hand evidence of how an LLM connected to a SQL database actually behaves: how often it is right, how it fails, and which safeguards are required so it cannot read or change what it should not.",
+    approach: [
+      { title: "Safety in the database first", body: "The app connects only as a read-only llm_reader user. Column-level grants hide customer and employee contact names, phones, addresses, and emails, so even a wrong query cannot expose them." },
+      { title: "SQL validation", body: "A sqlglot-based validator accepts a single SELECT only, adds a LIMIT, blocks dangerous functions such as SLEEP and LOAD_FILE, and every query runs with a timeout." },
+      { title: "Context for the model", body: "The prompt carries the schema, column COMMENTs, and a short file of business definitions (for example, what counts as sales and receivables). Each piece can be switched off to measure its effect." },
+      { title: "Agent with tool calling", body: "DeepSeek chooses between three tools: query the database, get a customer profile, or get product recommendations. Python runs the tools and produces every number, the model only picks tools and explains results, up to five steps." },
+      { title: "Explainability", body: "A parser, not the LLM, turns each SQL statement into readable calculation steps. Anything that comes from the LLM, such as its reason for picking a tool, is labeled as such." },
+      { title: "Evaluation", body: "22 test questions with reference SQL, run with business definitions and thinking mode on and off. A separate set of 10 questions tests tool choice against a keyword router, and recommendations are scored on a time split." },
+    ],
+    results: [
+      "Text-to-SQL scored 22/22 with business definitions and thinking on, against 18/22 with both off. One run per configuration on a small public dataset, so this is not a general accuracy figure.",
+      "Found three failure modes: silently substituting unavailable data (an office phone for a customer phone), ignoring business definitions in the prompt, and refusing too early once rules were tightened.",
+      "Business rules sit above every recommendation: new offers are flagged to hold when receivables exceed the credit limit or an order is On Hold or Disputed.",
+      "Honest negative result: on this synthetic dataset no recommendation method beat random picks (hit rate@10, 42 customers), so the dataset cannot show which method is better.",
+    ],
+    facts: [
+      { label: "Best config", value: "22/22" },
+      { label: "Baseline, both off", value: "18/22" },
+      { label: "DB access", value: "SELECT only" },
+      { label: "Agent tools", value: "3" },
+      { label: "Rec. methods", value: "5" },
+    ],
+  },
   {
     slug: "enterprise-data-warehouse",
     code: "DWH",
@@ -284,6 +329,6 @@ export const projects: Project[] = [
   },
 ];
 
-export const domains: Domain[] = ["Data Engineering", "Machine Learning", "NLP", "Web", "Product"];
+export const domains: Domain[] = ["LLM", "Data Engineering", "Machine Learning", "NLP", "Web", "Product"];
 
 export const getProject = (slug: string) => projects.find((p) => p.slug === slug);
