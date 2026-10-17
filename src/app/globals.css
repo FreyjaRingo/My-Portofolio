@@ -2130,15 +2130,17 @@ main .case {
   .cmd-hint {
     display: none;
   }
-  .fm-kpis {
-    grid-template-columns: 1fr;
-  }
   .fm-kpis .kpi {
-    border-bottom: 1px solid var(--line);
-    border-right: 0;
+    padding: 0.8rem 0.7rem 0.9rem;
   }
-  .fm-kpis .kpi:last-child {
-    border-bottom: 0;
+  .fm-kpis .kpi-label {
+    font-size: 0.66rem;
+  }
+  .fm-kpis .kpi-value {
+    font-size: 1.15rem;
+  }
+  .fm-kpis .kpi-detail {
+    font-size: 0.75rem;
   }
   .fm-legend-note {
     margin-left: 0;
@@ -2175,3 +2177,163 @@ main .case {
     animation-delay: 0s !important;
   }
 }
+
+/* ================================================================
+   Phones and small tablets
+   ================================================================ */
+.tabbar,
+.exp-toggle,
+.fm-swipe {
+  display: none;
+}
+.fm-swipe {
+  color: var(--muted);
+  font-size: 0.72rem;
+  margin: 0 0 0.5rem;
+}
+
+/* Touch screens have no "/" key to advertise. */
+@media (hover: none) {
+  .cmd-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --tabbar-h: 3.6rem;
+    --topbar-h: 3.75rem;
+  }
+
+  /* Top bar keeps brand and tools only. Sections move to the tab bar. */
+  .topbar .fn-nav {
+    display: none;
+  }
+
+  .tabbar {
+    background: rgba(0, 0, 0, 0.94);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    left: 0;
+    padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    position: fixed;
+    right: 0;
+    z-index: 60;
+  }
+  .tab {
+    align-items: center;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    gap: 0.22rem;
+    justify-content: center;
+    min-height: var(--tabbar-h);
+    min-width: 0;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tab kbd {
+    border: 1px solid var(--line);
+    color: var(--amber);
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    font-weight: 600;
+    line-height: 1.2;
+    padding: 0.08rem 0.3rem;
+    transition: background 120ms, color 120ms, border-color 120ms;
+  }
+  .tab span {
+    font-size: 0.68rem;
+    line-height: 1.1;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0 0.15rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .tab[aria-current="true"] {
+    color: var(--text);
+  }
+  .tab[aria-current="true"]::before {
+    background: var(--amber);
+    content: "";
+    height: 2px;
+    left: 22%;
+    position: absolute;
+    right: 22%;
+    top: -1px;
+  }
+  .tab[aria-current="true"] kbd {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--amber-ink);
+  }
+  .tab:active kbd {
+    border-color: var(--amber);
+  }
+
+  /* Keep the last content clear of the tab bar. */
+  .site {
+    padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+  }
+  .toast {
+    bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 0.75rem);
+  }
+
+  /* Experience: recent roles first, older ones on demand. */
+  .blotter[data-collapsed="true"] .trade-more {
+    display: none;
+  }
+  .exp-toggle {
+    align-items: center;
+    border: 1px solid var(--line);
+    color: var(--text);
+    display: flex;
+    font-size: 0.9rem;
+    font-weight: 600;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-top: 1.25rem;
+    min-height: 2.9rem;
+    width: 100%;
+  }
+  .exp-toggle:active {
+    border-color: var(--amber);
+  }
+  .exp-toggle-count {
+    color: var(--amber);
+    font-size: 0.8rem;
+  }
+}
+
+/* Fund table: keep the fund name pinned while the numbers scroll sideways. */
+@media (max-width: 640px) {
+  .fm-table .fm-check-col {
+    background: var(--panel);
+    left: 0;
+    position: sticky;
+    z-index: 1;
+  }
+  .fm-table thead .fm-check-col,
+  .fm-table thead th:nth-child(2) {
+    background: var(--panel-2);
+  }
+  .fm-table tbody th[scope="row"],
+  .fm-table thead th:nth-child(2) {
+    box-shadow: 6px 0 8px -6px rgba(0, 0, 0, 0.9);
+    left: 2.5rem;
+    min-width: 8.5rem;
+    position: sticky;
+    z-index: 1;
+  }
+  .fm-table tbody th[scope="row"] {
+    background: var(--panel);
+  }
+  .fm-swipe {
+    display: block;
+  }
+}
+

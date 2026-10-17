@@ -90,6 +90,9 @@ export function FundMonitor() {
 
       <Chart ids={selected} days={days} />
 
+      <p className="fm-swipe mono" aria-hidden>
+        Swipe the table for volatility, Sharpe, and drawdown →
+      </p>
       <div className="fm-table-wrap">
         <table className="fm-table">
           <caption className="sr-only">Fund metrics for the selected period. Tick a fund to add it to the chart (up to four).</caption>

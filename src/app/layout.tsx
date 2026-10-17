@@ -29,6 +29,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: "#000000",
   colorScheme: "dark",
+  // Lets the phone tab bar pad itself clear of the home indicator (env(safe-area-inset-bottom)).
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

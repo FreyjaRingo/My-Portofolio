@@ -11,6 +11,15 @@ export const dict = {
   "nav.lab": { en: "Lab", ja: "ラボ" },
   "nav.skills": { en: "Skills", ja: "スキル" },
   "nav.contact": { en: "Contact", ja: "連絡先" },
+  // Short labels for the phone tab bar (about 60px per tab).
+  "tab.overview": { en: "Home", ja: "概要" },
+  "tab.experience": { en: "Work", ja: "職歴" },
+  "tab.projects": { en: "Projects", ja: "実績" },
+  "tab.lab": { en: "Lab", ja: "ラボ" },
+  "tab.skills": { en: "Skills", ja: "スキル" },
+  "tab.contact": { en: "Contact", ja: "連絡" },
+  "exp.showMore": { en: "Show earlier roles", ja: "以前の経歴を表示" },
+  "exp.showLess": { en: "Show fewer roles", ja: "経歴を折りたたむ" },
 
   "hero.role": { en: "Data Innovation & AI Intern at Bank Danamon", ja: "ダナモン銀行 データイノベーション＆AI インターン" },
   "hero.summary": {

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AtSign, Download, GitBranch, Link2, Mail } from "lucide-react";
 import type { ReactNode } from "react";
+import { ExperienceList } from "@/components/ExperienceList";
 import { HeroCommand } from "@/components/HeroCommand";
 import { T } from "@/components/LangProvider";
 import { ProjectGrid } from "@/components/ProjectGrid";
@@ -73,7 +74,7 @@ export default function Home() {
           <aside className="hero-side rise" style={{ "--d": 3 } as React.CSSProperties}>
             {photo ? (
               <figure className="portrait">
-                <Image src={photo.src} alt={photo.alt} fill priority sizes="(max-width: 1024px) 100vw, 380px" className="portrait-img" />
+                <Image src={photo.src} alt={photo.alt} fill priority sizes="(max-width: 559px) 100vw, (max-width: 1099px) 240px, 380px" className="portrait-img" />
                 <figcaption className="portrait-cap mono">
                   <span>{personal.ticker}</span>
                   <span lang="ja">日本語 N2</span>
@@ -104,30 +105,7 @@ export default function Home() {
 
       <section id="experience" className="block" aria-labelledby="exp-title">
         <SectionHead code="EXP" id="exp-title" k="section.experience" note={`${portfolioData.experience.length} positions`} />
-        <ol className="blotter">
-          {portfolioData.experience.map((item) => {
-            const live = item.status.toUpperCase() === "LIVE";
-            return (
-              <li key={item.id} className="trade">
-                <div className="trade-meta">
-                  <span className="mono trade-period">{item.period}</span>
-                  <span className={`status ${live ? "status-up" : "status-flat"}`}>
-                    <T k={live ? "status.active" : "status.completed"} />
-                  </span>
-                </div>
-                <div className="trade-body">
-                  <p className="trade-company">{item.company}</p>
-                  <h3 className="trade-title">{item.title}</h3>
-                  <ul className="trade-notes">
-                    {item.descriptions.map((d) => (
-                      <li key={d}>{d}</li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
-            );
-          })}
-        </ol>
+        <ExperienceList />
       </section>
 
       <section id="projects" className="block" aria-labelledby="prj-title">

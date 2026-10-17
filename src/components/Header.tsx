@@ -9,14 +9,16 @@ import type { DictKey } from "@/data/i18n";
 import { openPalette } from "./CommandPalette";
 import { useLang, useT } from "./LangProvider";
 
-const sections: { id: string; code: string; k: DictKey }[] = [
-  { id: "overview", code: "DES", k: "nav.overview" },
-  { id: "experience", code: "EXP", k: "nav.experience" },
-  { id: "projects", code: "PRJ", k: "nav.projects" },
-  { id: "lab", code: "LAB", k: "nav.lab" },
-  { id: "skills", code: "SKL", k: "nav.skills" },
-  { id: "contact", code: "CNT", k: "nav.contact" },
+const sections: { id: string; code: string; k: DictKey; short: DictKey }[] = [
+  { id: "overview", code: "DES", k: "nav.overview", short: "tab.overview" },
+  { id: "experience", code: "EXP", k: "nav.experience", short: "tab.experience" },
+  { id: "projects", code: "PRJ", k: "nav.projects", short: "tab.projects" },
+  { id: "lab", code: "LAB", k: "nav.lab", short: "tab.lab" },
+  { id: "skills", code: "SKL", k: "nav.skills", short: "tab.skills" },
+  { id: "contact", code: "CNT", k: "nav.contact", short: "tab.contact" },
 ];
+
+const hrefFor = (id: string) => (id === "lab" ? "/lab/fund-monitor" : `/#${id}`);
 
 export function Header() {
   const pathname = usePathname();
@@ -43,7 +45,11 @@ export function Header() {
     nav.scrollTo({ left, behavior: smooth ? "smooth" : "auto" });
   }, [current]);
 
+  const typesFor = (id: string) =>
+    id === "lab" && !pathname.startsWith("/lab") ? ["nav-forward"] : !isHome && id !== "lab" ? ["nav-back"] : undefined;
+
   return (
+    <>
     <header className="topbar" style={{ viewTransitionName: "site-header" }}>
       <div className="topbar-row">
         <Link href="/" className="brand" aria-label="Athallah Azhar, home" transitionTypes={isHome ? undefined : ["nav-back"]}>
@@ -55,10 +61,10 @@ export function Header() {
           {sections.map((s) => (
             <Link
               key={s.id}
-              href={s.id === "lab" ? "/lab/fund-monitor" : `/#${s.id}`}
+              href={hrefFor(s.id)}
               className="fn-key"
               aria-current={current === s.id ? "true" : undefined}
-              transitionTypes={s.id === "lab" && !pathname.startsWith("/lab") ? ["nav-forward"] : !isHome && s.id !== "lab" ? ["nav-back"] : undefined}
+              transitionTypes={typesFor(s.id)}
             >
               <kbd>{s.code}</kbd>
               <span>{t(s.k)}</span>
@@ -86,6 +92,24 @@ export function Header() {
       </div>
       <Ticker />
     </header>
+
+    {/* Phone navigation. Lives outside the header because the header's
+        backdrop-filter would make it the containing block for position: fixed. */}
+    <nav className="tabbar" aria-label="Sections" style={{ viewTransitionName: "tabbar" }}>
+      {sections.map((s) => (
+        <Link
+          key={s.id}
+          href={hrefFor(s.id)}
+          className="tab"
+          aria-current={current === s.id ? "true" : undefined}
+          transitionTypes={typesFor(s.id)}
+        >
+          <kbd>{s.code}</kbd>
+          <span>{t(s.short)}</span>
+        </Link>
+      ))}
+    </nav>
+    </>
   );
 }
 
