@@ -196,7 +196,7 @@ kbd {
   align-items: center;
   display: grid;
   gap: 0.6rem 1rem;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   margin: 0 auto;
   max-width: var(--max);
   padding: 0.6rem var(--gutter);
@@ -804,6 +804,7 @@ main .case {
 .projects {
   display: grid;
   gap: 1rem;
+  grid-template-columns: minmax(0, 1fr);
 }
 .project {
   background: var(--panel);
@@ -1545,6 +1546,7 @@ main .case {
 .fm {
   display: grid;
   gap: 1.25rem;
+  grid-template-columns: minmax(0, 1fr);
 }
 .fm-controls {
   align-items: center;
@@ -1968,6 +1970,151 @@ main .case {
   .ticker {
     display: none;
   }
+}
+
+/* The section nav scrolls sideways until it fits on one row; fade the edge
+   so a clipped chip reads as "more this way" instead of a layout bug. */
+@media (max-width: 1279px) {
+  .fn-nav {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--gutter), #000 calc(100% - 2.5rem), transparent);
+    mask-image: linear-gradient(to right, transparent 0, #000 var(--gutter), #000 calc(100% - 2.5rem), transparent);
+    scroll-padding-inline: var(--gutter);
+  }
+}
+
+/* Tablet: portrait and pulse side by side instead of a half-empty column */
+@media (min-width: 560px) and (max-width: 1099px) {
+  .hero-side {
+    align-items: center;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  }
+  .pulse {
+    max-width: none;
+  }
+}
+
+@media (max-width: 559px) {
+  .topbar-row {
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+  }
+  .fn-key {
+    font-size: 0.8rem;
+    gap: 0.4rem;
+    min-height: 2.5rem;
+  }
+  .lang-switch button,
+  .palette-trigger {
+    justify-content: center;
+    min-height: 2.5rem;
+  }
+  .palette-trigger {
+    min-width: 2.5rem;
+  }
+  .brand-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cmdline {
+    margin-bottom: 1.75rem;
+  }
+  .hero-summary,
+  .hero-now {
+    margin-top: 1.25rem;
+  }
+  .hero-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 1.75rem;
+  }
+  .hero-actions .btn-primary {
+    grid-column: 1 / -1;
+  }
+  /* A full-height portrait would fill the whole phone screen */
+  .portrait {
+    aspect-ratio: 4 / 3;
+    max-width: none;
+  }
+  .portrait-img {
+    object-position: 50% 25%;
+  }
+  .pulse {
+    max-width: none;
+  }
+  .kpi {
+    padding: 0.9rem 0.85rem 1rem;
+  }
+  .trade {
+    padding: 1.25rem 0;
+  }
+  /* Filters stay on one swipeable row instead of stacking three deep */
+  .filters {
+    flex-wrap: nowrap;
+    margin-left: calc(var(--gutter) * -1);
+    margin-right: calc(var(--gutter) * -1);
+    overflow-x: auto;
+    padding: 0 var(--gutter) 0.1rem;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
+  }
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
+  .filter-chip {
+    flex: 0 0 auto;
+    min-height: 2.5rem;
+  }
+  .fm-controls .fm-cats {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  .project-body {
+    padding: 1rem;
+  }
+  .lab-teaser-cta {
+    width: 100%;
+  }
+  .jp-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .contact-mail {
+    font-size: 1.2rem;
+  }
+  .case-strip > div {
+    padding-right: 0.75rem;
+  }
+  .factsheet-links .btn {
+    width: 100%;
+  }
+}
+
+/* Smallest phones: the name matters more than the ticker badge */
+@media (max-width: 399px) {
+  .brand-ticker {
+    display: none;
+  }
+}
+
+/* Touch screens: no keyboard hints, no sticky hover zoom */
+@media (hover: none) {
+  .footer-hint {
+    display: none;
+  }
+  .project-link:hover .project-img {
+    transform: none;
+  }
+}
+
+.toast {
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+}
+.palette,
+.palette-box {
+  max-height: 76dvh;
 }
 
 @media (max-width: 480px) {

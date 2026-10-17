@@ -3,7 +3,7 @@
 import { Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { portfolioData } from "@/data/portfolio";
 import type { DictKey } from "@/data/i18n";
 import { openPalette } from "./CommandPalette";
@@ -32,6 +32,17 @@ export function Header() {
 
   const current = isHome ? active : pathname.startsWith("/projects") ? "projects" : pathname.startsWith("/lab") ? "lab" : "";
 
+  // On narrow screens the nav scrolls sideways; keep the active chip in view.
+  const navRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const nav = navRef.current;
+    const el = nav?.querySelector<HTMLElement>('[aria-current="true"]');
+    if (!nav || !el || nav.scrollWidth <= nav.clientWidth) return;
+    const left = el.offsetLeft - (nav.clientWidth - el.offsetWidth) / 2;
+    const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    nav.scrollTo({ left, behavior: smooth ? "smooth" : "auto" });
+  }, [current]);
+
   return (
     <header className="topbar" style={{ viewTransitionName: "site-header" }}>
       <div className="topbar-row">
@@ -40,7 +51,7 @@ export function Header() {
           <span className="brand-name" translate="no">Athallah Azhar</span>
         </Link>
 
-        <nav className="fn-nav" aria-label="Sections">
+        <nav ref={navRef} className="fn-nav" aria-label="Sections">
           {sections.map((s) => (
             <Link
               key={s.id}

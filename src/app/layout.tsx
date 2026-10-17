@@ -45,7 +45,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <footer className="footer">
               <span>© {new Date().getFullYear()} Athallah Azhar Aulia Hadi</span>
               <span className="mono">
-                Press <kbd>/</kbd> to search · Not investment advice
+                <span className="footer-hint">
+                  Press <kbd>/</kbd> to search ·{" "}
+                </span>
+                Not investment advice
               </span>
             </footer>
           </div>
