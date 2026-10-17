@@ -10,6 +10,7 @@ import "./globals.css";
 import { CommandPalette } from "@/components/CommandPalette";
 import { Header } from "@/components/Header";
 import { LangProvider } from "@/components/LangProvider";
+import { MarketBackdrop } from "@/components/MarketBackdrop";
 import { siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full">
         <LangProvider>
+          <MarketBackdrop />
           <div className="site">
             <a href="#main" className="skip-link">
               Skip to content

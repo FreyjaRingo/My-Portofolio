@@ -2387,3 +2387,34 @@ main .case {
     text-align: left;
   }
 }
+
+/* ================================================================
+   Market backdrop (decorative, behind everything)
+   ================================================================ */
+.backdrop {
+  /* Terminal grid in plain CSS so the canvas only has to draw lines. */
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 120px 80px;
+  height: 100lvh;
+  inset: 0 0 auto 0;
+  /* Fade the top under the header and soften the edges. */
+  mask-image: linear-gradient(to bottom, transparent 0, #000 18%, #000 88%, rgba(0, 0, 0, 0.6) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 18%, #000 88%, rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
+  position: fixed;
+  z-index: 0;
+}
+.backdrop-canvas {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.site {
+  position: relative;
+  z-index: 1;
+}
+::view-transition-group(backdrop) {
+  animation: none;
+}
