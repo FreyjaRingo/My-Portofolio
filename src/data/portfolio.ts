@@ -166,22 +166,10 @@ export const portfolioData = {
       ],
     },
     {
-      id: "DBS-03",
-      title: "Data Scientist Cohort",
-      company: "Coding Camp powered by DBS Foundation",
-      period: "Feb 2026 - Jun 2026",
-      status: "CLOSED",
-      media: noMedia,
-      descriptions: [
-        "Completed the Data Scientist path: preprocessing, EDA, feature engineering, visualization, and model evaluation.",
-        "Capstone: NutriMatch, an allergy-aware meal plan recommender. Prepared nutrition and allergen datasets and computed per-user needs with BMR and TDEE.",
-      ],
-    },
-    {
       id: "MBK-04",
       title: "Student Mbassador",
       company: "Maybank Indonesia",
-      period: "Aug 2025 - Jan 2026",
+      period: "Mar 2024 - Jan 2026",
       status: "CLOSED",
       media: [
         {
@@ -200,10 +188,39 @@ export const portfolioData = {
           width: 1000,
           height: 589,
         },
+        {
+          src: `${mediaBase}/experience/mbassador-2024-certificate-award.webp`,
+          alt: "Maybank #Mbassador 2024 certificate of award",
+          caption: "#Mbassador 2024 certificate, Maybank Indonesia",
+          slot: "EXPERIENCE_VISUAL",
+          width: 1000,
+          height: 700,
+        },
+        {
+          src: `${mediaBase}/experience/mbassador-2024-certificate-achievement.webp`,
+          alt: "Global Maybank Student Ambassador Programme 2024 certificate of achievement",
+          caption: "Global Maybank Student Ambassador Programme 2024",
+          slot: "EXPERIENCE_VISUAL",
+          width: 1000,
+          height: 1425,
+        },
       ],
       descriptions: [
         "Ran a career preparation workshop for 30+ students end to end, from concept and speaker sourcing to delivery.",
         "Partnered with Writeyuk and Maybank speakers on sessions covering CVs, portfolios, and work ethics.",
+        "First period (2024): represented Maybank at campus and community events and led seminars on its programs.",
+      ],
+    },
+    {
+      id: "DBS-03",
+      title: "Data Scientist Cohort",
+      company: "Coding Camp powered by DBS Foundation",
+      period: "Feb 2026 - Jun 2026",
+      status: "CLOSED",
+      media: noMedia,
+      descriptions: [
+        "Completed the Data Scientist path: preprocessing, EDA, feature engineering, visualization, and model evaluation.",
+        "Capstone: NutriMatch, an allergy-aware meal plan recommender. Prepared nutrition and allergen datasets and computed per-user needs with BMR and TDEE.",
       ],
     },
     {
@@ -294,17 +311,6 @@ export const portfolioData = {
       descriptions: [
         "Assisted digital logic labs in Tinkercad and assembly programming with NASM on DOSBox.",
         "Helped grade practical assignments.",
-      ],
-    },
-    {
-      id: "MBK-09",
-      title: "Student Ambassador",
-      company: "Maybank",
-      period: "Mar 2024 - Dec 2024",
-      status: "CLOSED",
-      media: noMedia,
-      descriptions: [
-        "Represented Maybank at campus and community events and led seminars on its programs.",
       ],
     },
   ],
