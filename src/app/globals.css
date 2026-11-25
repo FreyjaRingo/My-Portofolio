@@ -830,9 +830,9 @@ main .case {
 }
 .trade-shot {
   border: 1px solid var(--line);
+  flex: 1 1 200px;
   margin: 0;
   max-width: 420px;
-  width: 100%;
 }
 .trade-shot-img {
   display: block;
