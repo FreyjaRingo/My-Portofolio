@@ -1,0 +1,258 @@
+\documentclass[a4paper,10pt]{article}
+
+% Paket untuk pengaturan layout dan formatting
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+
+% Pengaturan Margin
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-0.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Format Judul Seksi
+\titleformat{\section}{
+  \scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule]
+\titlespacing*{\section}{0pt}{10pt}{5pt} 
+
+% Custom commands untuk format item
+\newcommand{\resumeItem}[1]{
+  \item\small{#1}
+}
+
+% Command untuk Perusahaan dan Posisi Pertama
+\newcommand{\resumeSubheading}[4]{
+  \item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}
+}
+
+% Command untuk Posisi Kedua di Perusahaan yang Sama 
+\newcommand{\resumeSubRole}[2]{
+  \item[]
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}
+}
+
+% Pengaturan Jarak Hierarki List yang Konsisten
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}, itemsep=4pt, parsep=0pt]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.15in, label={$\bullet$}, itemsep=1pt, topsep=2pt, parsep=0pt, partopsep=0pt]}
+\newcommand{\resumeItemListEnd}{\end{itemize}}
+
+% -------------------------------------------
+% RESUME STARTS HERE
+% -------------------------------------------
+
+\begin{document}
+\small
+
+%----------HEADER----------
+\begin{center}
+    \textbf{\Huge \scshape Athallah Azhar Aulia Hadi} \\ \vspace{4pt}
+    Tangerang Selatan, 15412 $|$ +6281519985423 \\ \vspace{2pt}
+    \href{mailto:athallah.rahza@gmail.com}{\underline{athallah.rahza@gmail.com}} $|$ 
+    \href{https://linkedin.com/in/athallah-azhar}{\underline{linkedin.com/in/athallah-azhar}} $|$ 
+    \href{https://github.com/FreyjaRingo}
+    {\underline{github.com/FreyjaRingo}}
+\end{center}
+
+%-----------SUMMARY-----------
+\section{Summary}
+7th-semester Informatics Engineering student and \textbf{Bakti BCA and FIFGROUP Young Leader Scholarship Awardee} focused on data and AI in financial services. Currently a Data Innovation and AI Intern at PT Bank Danamon Indonesia Tbk, bridging business units, IT, and vendors on a manual-to-AI transformation initiative. Previously built mutual fund and bond dashboards and transaction tools as a Strategist Intern at Maybank Indonesia.
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Universitas Padjadjaran}{Sumedang, Indonesia}
+      {Bachelor of Informatics Engineering (GPA: 3.81/4.00)}{Aug 2023 -- Expected Aug 2027}
+      \resumeItemListStart
+            \resumeItem{\textbf{Relevant Coursework:} Artificial Intelligence (Computer Vision), Data Mining (Sentiment Analysis, Retail Forecasting), Decision Support Systems, Numerical Methods, Database Systems, Object-Oriented Programming, Algorithm Strategies.}
+            \resumeItem{\textbf{Key Achievement:} Selected as Bakti BCA Scholarship Awardee 2025 (Merit-based scholarship) and FIFGROUP Young Leader 2026 Scholarship recipient.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {SMA Negeri 24 Jakarta}{Jakarta, Indonesia}
+      {Science Major (GPA: 89.29/100)}{Jun 2020 -- May 2023}
+  \resumeSubHeadingListEnd
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    % Bank Danamon
+    \resumeSubheading
+      {PT Bank Danamon Indonesia Tbk}{Jakarta, Indonesia}
+      {Data Innovation and AI Intern}{Sep 2026 -- Present}
+      \resumeItemListStart
+        \resumeItem{Serve as product owner liaison bridging business units, IT, and vendor teams on a digital transformation initiative shifting manual processes to AI-driven workflows.}
+        \resumeItem{Translate business requirements into user stories and product backlogs, and author product initiation decks to align stakeholders on scope and rollout plans.}
+        \resumeItem{Facilitate backlog grooming sessions with IT and vendor teams to prioritize development requirements for the initiative.}
+        \resumeItem{Built a text-to-SQL proof of concept connecting an LLM (DeepSeek) to a MySQL database with a Streamlit interface, to understand the approach and support vendor evaluation.}
+      \resumeItemListEnd
+
+    % Maybank
+    \resumeSubheading
+      {PT Bank Maybank Indonesia Tbk}{Jakarta, Indonesia}
+      {Strategist Intern}{Feb 2026 -- Aug 2026}
+      \resumeItemListStart
+        \resumeItem{Developed an interactive Streamlit dashboard to monitor mutual fund performance using multiple indicators, shifting workflows from manual data collection to fully automated updates and cutting analysis time by 75\%.}
+        \resumeItem{Built a data extraction pipeline from fund fact sheets to track top holdings and sectoral allocations, and designed a fixed-income dashboard to identify bond recommendations outperforming benchmarks based on yield and duration.}
+        \resumeItem{Built VBA Excel calculators and web applications deployed on Vercel to automate bond transaction workflows for Relationship Managers and Investment Specialists, cutting manual calculation errors and accelerating processing time for subscriptions, redemptions, and switchings.}
+        \resumeItem{Authored regular Monthly Investment Focus reports by analyzing macroeconomic dynamics, identifying strengthening sectors, and formulating portfolio rotation strategies for product recommendations.}
+        % TODO: add a measurable result here, e.g. "X of Y recommended funds outperformed their benchmark over Z months".
+      \resumeItemListEnd
+      
+    \resumeSubRole
+      {Student Ambassador}{Mar 2024 -- Jan 2026}
+      \resumeItemListStart
+        \resumeItem{Organized a seminar on ``Business Plan Competition Tips \& Tricks'' attended by 40+ students to introduce Maybank's brand.}
+        \resumeItem{Hosted a career preparation workshop (CVs \& Internships) for 30+ students to promote the Maybank Student Ambassador program.}
+        \resumeItem{Built relationships with university students to improve engagement with Maybank initiatives.}
+      \resumeItemListEnd
+
+    % DBS Coding Camp
+    \resumeSubheading
+      {Coding Camp powered by DBS Foundation}{Indonesia}
+      {Data Scientist Cohort}{Feb 2026 -- Jun 2026}
+      \resumeItemListStart
+        \resumeItem{Contributed as a Data Scientist in NutriMatch, an AI-powered meal recommendation platform.}
+        \resumeItem{Applied data preprocessing, feature engineering, and nutritional analytics to support personalized recommendation generation.}
+        \resumeItem{Collaborated with cross-functional developers to deploy an end-to-end production-ready application.}
+      \resumeItemListEnd
+
+    % SPARK 
+    \resumeSubheading
+      {SeaMoney (Shopee \& SeaBank)}{Indonesia}
+      {SPARK Student Ambassador}{Sep 2025 -- Jan 2026}
+      \resumeItemListStart
+        \resumeItem{Executed targeted financial literacy campaigns to educate university students on the SeaBank and ShopeePay ecosystems.}
+        \resumeItem{Drove user acquisition through strategic campus activations, resulting in increased app downloads and active usage within the student demographic.}
+        \resumeItem{Collaborated with the central SeaMoney team to deploy social media marketing strategies, amplifying brand presence and engagement.}
+      \resumeItemListEnd
+
+    % Bakti Champions
+    \resumeSubheading
+      {PT Bank Central Asia Tbk (BCA)}{Indonesia}
+      {Bakti Champions (Community Empowerment Project)}{Apr 2025 -- Sep 2025}
+      \resumeItemListStart
+        \resumeItem{Created a digital bookkeeping system using Excel to help a local SME manage their finances better.}
+        \resumeItem{Trained the business owner on using digital tools to expand their market reach.}
+      \resumeItemListEnd
+
+    % UNPAD
+    \resumeSubheading
+      {Universitas Padjadjaran}{Sumedang, Indonesia}
+      {Numerical Methods \& Computer Architecture Teaching Assistant}{Feb 2025 -- Dec 2025}
+      \resumeItemListStart
+        \resumeItem{Helped 40 students solve math and engineering problems using Excel, Python, and C++ during lab sessions.}
+        \resumeItem{Taught basic assembly programming using NASM and DOSBox, and assisted in digital logic simulation using Tinkercad.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------ORGANIZATIONAL EXPERIENCE-----------
+\section{Organizational Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Informatics Festival (IFEST) 2025}{Sumedang, Indonesia}
+      {Project Supervisor of Technopreneur Division}{Jul 2025 -- Oct 2025}
+      \resumeItemListStart
+        \resumeItem{Directed the end-to-end conceptualization of the Technopreneur program, successfully launching 2 core events (workshops and competitions) that engaged over 100 participants.}
+        \resumeItem{Secured strategic partnerships with 11 external sponsors, generating more than Rp 25 Million in funding to fully support event operations and logistics.}
+      \resumeItemListEnd
+
+    % Himatif FMIPA Unpad
+    \resumeSubheading
+      {Himatif FMIPA Unpad}{Sumedang, Indonesia}
+      {Head of Conceptor - Character Building Season 2025}{Aug 2025 -- Oct 2025}
+      \resumeItemListStart
+        \resumeItem{Led a cross-functional team of 18 members to design the seasonal event framework, ensuring 100\% on-time execution of the project schedule.}
+        \resumeItem{Coordinated with the Public Relations division to onboard 10+ industry speakers and high-profile alumni, driving an event attendance of 100+ students.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+    \resumeSubHeadingListStart
+
+      \resumeProjectHeading
+          {\textbf{End-to-End Enterprise Data Warehouse} $|$ \emph{Python, ClickHouse, FastAPI}}{\href{https://github.com/Luthfi-AS/GojekDataWarehouse}{GitHub}}
+          \resumeItemListStart
+            \resumeItem{Architected a Kimball Galaxy Schema EDW to resolve operational data fragmentation across a simulated multi-vertical super-app ecosystem.}
+            \resumeItem{Constructed a custom Python ETL pipeline extracting data from PostgreSQL, executing rigorous cleansing and applying SCD Type 2 tracking.}
+            \resumeItem{Leveraged ClickHouse with Materialized Views to physically pre-aggregate massive datasets, achieving sub-second query latency for analytical workloads.}
+            \resumeItem{Enabled real-time access to aggregated behavioral metrics through a FastAPI service layer.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{NutriMatch: AI Meal Recommendation} $|$ \emph{Python, Next.js, Supabase, Prisma}}{\href{https://nutrimatch-app.vercel.app/}{Website} $|$ \href{https://github.com/Kurtz17/NutriMatch}{GitHub}}
+          \resumeItemListStart
+            \resumeItem{Engineered an AI-powered web application to generate personalized weekly meal plans based on user health goals and food allergy constraints.}
+            \resumeItem{Calculated user-specific nutritional requirements using BMR and TDEE formulas, integrated with allergy-aware filtering logic.}
+            \resumeItem{Transformed multiple public nutrition datasets into model-ready data to support recommendation quality.}
+            \resumeItem{Deployed the end-to-end product using Next.js, TypeScript, PostgreSQL, and Vercel.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{CareConnect} $|$ \emph{Next.js, TypeScript, Prisma, PostgreSQL}}{\href{https://care-connect-ten-hazel.vercel.app/}{Website} $|$ \href{https://github.com/KangDap/care-connect}{GitHub}}
+          \resumeItemListStart
+            \resumeItem{Developed a mental health web platform featuring anonymous online psychological consultations, automated scheduling, and real-time private chat.}
+            \resumeItem{Implemented Role-Based Access Control (RBAC) with tailored dashboards for users, psychologists, and administrators.}
+            \resumeItem{Engineered secure case reporting modules and integrated the Midtrans payment gateway to facilitate online donations.}
+            \resumeItem{Maintained code reliability by implementing Unit Testing with Vitest and establishing a CI pipeline using GitHub Actions.}
+          \resumeItemListEnd
+          
+    \resumeSubHeadingListEnd
+
+%-----------AWARDS-----------
+\section{Honors \& Awards}
+  \resumeItemListStart
+    \resumeItem{\textbf{FIFGROUP Young Leader Scholarship Awardee 2026}}
+    \resumeItem{\textbf{Bakti BCA Scholarship Awardee 2025}}
+    \resumeItem{\textbf{SPARK Student Ambassador 2025}}
+    \resumeItem{\textbf{Maybank Student Ambassador} (2024 \& 2025)}
+    \resumeItem{\textbf{2nd Place Japanese Language Olympiad}, SMA/MA Level DKI Jakarta (2022)}
+  \resumeItemListEnd
+
+%-----------SKILLS-----------
+\section{Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}, itemsep=1pt, parsep=0pt, topsep=0pt]
+    \item \textbf{Languages:} Indonesian (Native), English (TOEFL 600), Japanese (N2)
+    \item \textbf{Programming:} Python, TypeScript, JavaScript, SQL, C++, PHP, R, Java
+    \item \textbf{Data \& AI:} ClickHouse, PostgreSQL, Pandas, LightGBM, Scikit-learn, MediaPipe, YOLOv3, FP-Growth, LDA, Naive Bayes
+    \item \textbf{Web \& Dev Tools:} Next.js, FastAPI, Prisma, Supabase, Git, Docker, Vercel
+    \item \textbf{Soft Skills:} Leadership, Analytical Thinking, Cross-functional Teamwork
+ \end{itemize}
+
+\end{document}

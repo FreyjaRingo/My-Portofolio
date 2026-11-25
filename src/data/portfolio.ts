@@ -1,6 +1,6 @@
 const mediaBase = "/portfolio-media";
 
-type Media = { src: string; alt: string; caption: string; slot: string };
+type Media = { src: string; alt: string; caption: string; slot: string; width?: number; height?: number };
 
 const noMedia: Media[] = [];
 
@@ -12,7 +12,7 @@ export const portfolioData = {
     role: "Data Innovation & AI Intern at Bank Danamon",
     location: "Tangerang Selatan, Indonesia",
     summary:
-      "7th-semester Informatics Engineering student at Universitas Padjadjaran and Bakti BCA Scholarship awardee. I build data products for financial services, from fund and bond dashboards to data warehouses and machine learning models, and I have worked on the strategy side of investment products at Maybank.",
+      "7th-semester Informatics Engineering student at Universitas Padjadjaran, and a Bakti BCA and FIFGROUP Young Leader scholarship awardee. I build data products for financial services, from fund and bond dashboards to data warehouses and machine learning models, and I have worked on the strategy side of investment products at Maybank.",
     currentThread:
       "Data Innovation & AI intern at Bank Danamon, acting as product owner liaison on an initiative that moves manual processes to AI-driven workflows.",
     email: "athallah.rahza@gmail.com",
@@ -72,6 +72,7 @@ export const portfolioData = {
     { label: "JLPT", value: "N2", trend: "日本語" },
     { label: "TOEFL", value: "600", trend: "+BILINGUAL" },
     { label: "MAYBANK", value: "CLOSED", trend: "STRAT" },
+    { label: "FIFGROUP", value: "YL 2026", trend: "SCHOLAR" },
     { label: "BCA", value: "SCHOLAR", trend: "2025" },
     { label: "PROJECTS", value: "8", trend: "CASE STUDIES" },
   ],
@@ -79,20 +80,50 @@ export const portfolioData = {
     { label: "Current desk", value: "Danamon", detail: "Data Innovation & AI intern" },
     { label: "Education", value: "UNPAD IF", detail: "Informatics Engineering, GPA 3.81" },
     { label: "Language edge", value: "JLPT N2", detail: "Japanese N2, English TOEFL 600" },
-    { label: "Scholarship", value: "Bakti BCA", detail: "Awardee 2025" },
+    { label: "Scholarship", value: "FIFGROUP YL", detail: "Young Leader 2026, Bakti BCA 2025" },
   ],
   experience: [
+    {
+      id: "FYL-00",
+      title: "FIFGROUP Young Leader, Batch 4",
+      company: "FIFGROUP (Astra Financial)",
+      period: "Nov 2026 - Present",
+      status: "LIVE",
+      media: [
+        {
+          src: `${mediaBase}/experience/fyl-batch-4.webp`,
+          alt: "FIFGROUP Young Leader Batch 4 2026 key visual: Start Bright, Grow Beyond",
+          caption: "FYL Batch 4, 2026",
+          slot: "EXPERIENCE_VISUAL",
+          width: 1600,
+          height: 900,
+        },
+      ],
+      descriptions: [
+        "Selected for FIFGROUP's scholarship and development program, covering in-class training, branch visits, a design thinking business idea competition, and an internship.",
+      ],
+    },
     {
       id: "DNM-01",
       title: "Data Innovation and AI Intern",
       company: "PT Bank Danamon Indonesia Tbk",
       period: "Sep 2026 - Present",
       status: "LIVE",
-      media: noMedia,
+      media: [
+        {
+          src: `${mediaBase}/experience/danamon-team.webp`,
+          alt: "Athallah with the team at Bank Danamon",
+          caption: "With the team at Danamon",
+          slot: "EXPERIENCE_VISUAL",
+          width: 1280,
+          height: 960,
+        },
+      ],
       descriptions: [
         "Product owner liaison between business units, IT, and vendors on an initiative moving manual processes to AI-driven workflows.",
         "Translate business requirements into user stories and backlogs, and write product initiation decks to align stakeholders on scope and rollout.",
         "Run backlog grooming with IT and vendor teams to prioritize development.",
+        "Built a text-to-SQL proof of concept connecting an LLM (DeepSeek) to a MySQL database with a Streamlit interface, to understand the approach and support vendor evaluation.",
       ],
     },
     {
@@ -208,6 +239,7 @@ export const portfolioData = {
     },
   ],
   awards: [
+    "FIFGROUP Young Leader Scholarship Awardee, 2026",
     "Bakti BCA Scholarship Awardee, 2025",
     "SPARK Student Ambassador, 2025",
     "Maybank Student Ambassador, 2024 and 2025",

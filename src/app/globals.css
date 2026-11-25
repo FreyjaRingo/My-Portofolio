@@ -789,6 +789,31 @@ main .case {
   padding-left: 1.1rem;
   position: relative;
 }
+.trade-media {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.trade-shot {
+  border: 1px solid var(--line);
+  margin: 0;
+  max-width: 420px;
+  width: 100%;
+}
+.trade-shot-img {
+  display: block;
+  height: auto;
+  max-height: 280px;
+  object-fit: cover;
+  width: 100%;
+}
+.trade-shot-cap {
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.72rem;
+  padding: 0.35rem 0.6rem;
+}
 .trade-notes li::before,
 .results li::before {
   color: var(--amber);

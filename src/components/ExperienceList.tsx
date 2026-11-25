@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { portfolioData } from "@/data/portfolio";
 import { T } from "./LangProvider";
@@ -43,6 +44,23 @@ export function ExperienceList() {
                     <li key={d}>{d}</li>
                   ))}
                 </ul>
+                {item.media.length > 0 ? (
+                  <div className="trade-media">
+                    {item.media.map((m) => (
+                      <figure key={m.src} className="trade-shot">
+                        <Image
+                          src={m.src}
+                          alt={m.alt}
+                          width={m.width ?? 1200}
+                          height={m.height ?? 800}
+                          sizes="(max-width: 640px) 100vw, 420px"
+                          className="trade-shot-img"
+                        />
+                        <figcaption className="trade-shot-cap mono">{m.caption}</figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                ) : null}
               </div>
             </li>
           );

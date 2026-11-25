@@ -23,8 +23,8 @@ export const dict = {
 
   "hero.role": { en: "Data Innovation & AI Intern at Bank Danamon", ja: "ダナモン銀行 データイノベーション＆AI インターン" },
   "hero.summary": {
-    en: "7th-semester Informatics Engineering student at Universitas Padjadjaran and Bakti BCA Scholarship awardee. I build data products for financial services, from fund and bond dashboards to data warehouses and machine learning models, and I have worked on the strategy side of investment products at Maybank.",
-    ja: "パジャジャラン大学 情報工学科 4年生（7学期）、Bakti BCA 奨学生。投資信託・債券のダッシュボードからデータウェアハウス、機械学習モデルまで、金融向けのデータプロダクトを作っています。Maybank では投資商品の戦略業務を経験しました。",
+    en: "7th-semester Informatics Engineering student at Universitas Padjadjaran, and a Bakti BCA and FIFGROUP Young Leader scholarship awardee. I build data products for financial services, from fund and bond dashboards to data warehouses and machine learning models, and I have worked on the strategy side of investment products at Maybank.",
+    ja: "パジャジャラン大学 情報工学科 4年生（7学期）、Bakti BCA 奨学生・FIFGROUP Young Leader 2026 奨学生。投資信託・債券のダッシュボードからデータウェアハウス、機械学習モデルまで、金融向けのデータプロダクトを作っています。Maybank では投資商品の戦略業務を経験しました。",
   },
   "hero.now": {
     en: "Data Innovation & AI intern at Bank Danamon, acting as product owner liaison on an initiative that moves manual processes to AI-driven workflows.",
