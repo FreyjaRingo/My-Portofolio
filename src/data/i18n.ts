@@ -35,6 +35,8 @@ export const dict = {
   "cta.palette": { en: "Search everything", ja: "すべてを検索" },
 
   "section.experience": { en: "Experience", ja: "職歴" },
+  "section.organizations": { en: "Organizations", ja: "組織活動" },
+  "org.earlier": { en: "Earlier committee roles", ja: "これまでの委員会活動" },
   "section.projects": { en: "Projects", ja: "プロジェクト" },
   "section.projectsNote": { en: "Case studies", ja: "ケーススタディ" },
   "section.lab": { en: "Lab", ja: "ラボ" },

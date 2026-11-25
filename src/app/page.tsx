@@ -112,6 +112,43 @@ export default async function Home() {
         <ExperienceList />
       </section>
 
+      <section id="organizations" className="block" aria-labelledby="org-title">
+        <SectionHead code="ORG" id="org-title" k="section.organizations" note={`${portfolioData.organizations.length} leadership roles`} />
+        <ol className="blotter">
+          {portfolioData.organizations.map((o) => (
+            <li key={o.id} className="trade">
+              <div className="trade-meta">
+                <span className="mono trade-period">{o.period}</span>
+                <span className="status status-flat">
+                  <T k="status.completed" />
+                </span>
+              </div>
+              <div className="trade-body">
+                <p className="trade-company">{o.org}</p>
+                <h3 className="trade-title">{o.title}</h3>
+                <ul className="trade-notes">
+                  {o.descriptions.map((d) => (
+                    <li key={d}>{d}</li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <h3 className="group-title group-gap">
+          <T k="org.earlier" />
+        </h3>
+        <ul className="org-earlier">
+          {portfolioData.earlierOrganizations.map((e) => (
+            <li key={`${e.role}-${e.org}`}>
+              <span className="org-role">{e.role}</span>
+              <span className="org-name">{e.org}</span>
+              <span className="mono org-period">{e.period}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
       <section id="projects" className="block" aria-labelledby="prj-title">
         <SectionHead code="PRJ" id="prj-title" k="section.projects" noteKey="section.projectsNote" />
         <ProjectGrid />

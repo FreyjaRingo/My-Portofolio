@@ -224,6 +224,37 @@ export const portfolioData = {
       ],
     },
   ],
+  organizations: [
+    {
+      id: "ORG-01",
+      title: "Project Supervisor, Technopreneur Division",
+      org: "Informatics Festival (IFEST) 2025",
+      period: "Jul 2025 - Oct 2025",
+      descriptions: [
+        "Directed the end-to-end concept of the Technopreneur program, launching 2 core events (workshops and competitions) that engaged over 100 participants.",
+        "Secured partnerships with 11 external sponsors, generating more than Rp 25 million in funding for event operations and logistics.",
+      ],
+    },
+    {
+      id: "ORG-02",
+      title: "Head of Conceptor, Character Building Season 2025",
+      org: "Himatif FMIPA Unpad",
+      period: "Aug 2025 - Oct 2025",
+      descriptions: [
+        "Led a cross-functional team of 18 members to design the event concept and schedule, keeping the project 100% on schedule.",
+        "Coordinated with the Public Relations team to bring in 10+ industry speakers and alumni, with 100+ students attending.",
+      ],
+    },
+  ],
+  earlierOrganizations: [
+    { role: "Staff of Technopreneur", org: "IFEST Unpad", period: "2024" },
+    { role: "Executor Division Staff", org: "Character Building Season", period: "2024" },
+    { role: "Operator", org: "Prepare For Future 2, Himatif", period: "2024 & 2025" },
+    { role: "Logistics Staff", org: "Prepare For Future 1, Himatif", period: "2024 & 2025" },
+    { role: "Logistics Staff", org: "Informatics Company Visit, Himatif", period: "2024 & 2025" },
+    { role: "Accommodation Staff", org: "Informatics Fun Day, Himatif", period: "2024" },
+    { role: "Logistics Staff", org: "Informatics Sport Art and Game Tournament", period: "2025" },
+  ],
   education: [
     {
       title: "Universitas Padjadjaran",

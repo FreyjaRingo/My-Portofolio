@@ -789,6 +789,39 @@ main .case {
   padding-left: 1.1rem;
   position: relative;
 }
+.org-earlier {
+  border-top: 1px solid var(--line);
+  display: grid;
+  margin-top: 0.75rem;
+}
+.org-earlier li {
+  align-items: baseline;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 0.25rem 1rem;
+  grid-template-columns: 16rem minmax(0, 1fr) 7rem;
+  padding: 0.6rem 0;
+}
+.org-role {
+  font-weight: 500;
+}
+.org-name {
+  color: var(--text-2);
+}
+.org-period {
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-align: right;
+}
+@media (max-width: 640px) {
+  .org-earlier li {
+    grid-template-columns: 1fr auto;
+  }
+  .org-name {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
 .trade-media {
   display: flex;
   flex-wrap: wrap;
