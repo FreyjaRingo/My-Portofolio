@@ -131,6 +131,23 @@ export default async function Home() {
                     <li key={d}>{d}</li>
                   ))}
                 </ul>
+                {o.media.length ? (
+                  <div className="trade-media">
+                    {o.media.map((m) => (
+                      <figure key={m.src} className="trade-shot">
+                        <Image
+                          src={m.src}
+                          alt={m.alt}
+                          width={m.width ?? 1200}
+                          height={m.height ?? 800}
+                          sizes="(max-width: 640px) 100vw, 420px"
+                          className="trade-shot-img"
+                        />
+                        <figcaption className="trade-shot-cap mono">{m.caption}</figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                ) : null}
               </div>
             </li>
           ))}

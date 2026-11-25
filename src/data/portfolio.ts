@@ -217,7 +217,24 @@ export const portfolioData = {
       company: "Coding Camp powered by DBS Foundation",
       period: "Feb 2026 - Jun 2026",
       status: "CLOSED",
-      media: noMedia,
+      media: [
+        {
+          src: `${mediaBase}/experience/dbs-coding-camp-certificate.webp`,
+          alt: "Coding Camp 2026 powered by DBS Foundation certificate of completion, Data Scientist path",
+          caption: "Certificate of completion, Data Scientist path",
+          slot: "EXPERIENCE_VISUAL",
+          width: 1000,
+          height: 705,
+        },
+        {
+          src: `${mediaBase}/experience/dbs-nutrimatch-capstone.webp`,
+          alt: "NutriMatch capstone presentation over Zoom",
+          caption: "NutriMatch capstone presentation",
+          slot: "EXPERIENCE_VISUAL",
+          width: 1000,
+          height: 488,
+        },
+      ],
       descriptions: [
         "Completed the Data Scientist path: preprocessing, EDA, feature engineering, visualization, and model evaluation.",
         "Capstone: NutriMatch, an allergy-aware meal plan recommender. Prepared nutrition and allergen datasets and computed per-user needs with BMR and TDEE.",
@@ -258,7 +275,32 @@ export const portfolioData = {
       company: "Informatika Unpad",
       period: "Aug 2025 - Dec 2025",
       status: "CLOSED",
-      media: noMedia,
+      media: [
+        {
+          src: `${mediaBase}/experience/unpad-metnum-lab.webp`,
+          alt: "Numerical Methods lab session in the computer lab",
+          caption: "Lab session, Informatika Unpad",
+          slot: "EXPERIENCE_VISUAL",
+          width: 1000,
+          height: 562,
+        },
+        {
+          src: `${mediaBase}/experience/unpad-metnum-session-slide.webp`,
+          alt: "Numerical Methods practice problem slide on Newton-Raphson",
+          caption: "Newton-Raphson practice problem",
+          slot: "EXPERIENCE_VISUAL",
+          width: 1000,
+          height: 562,
+        },
+        {
+          src: `${mediaBase}/experience/unpad-metnum-online-class.webp`,
+          alt: "Online Numerical Methods class",
+          caption: "Online class session",
+          slot: "EXPERIENCE_VISUAL",
+          width: 1000,
+          height: 474,
+        },
+      ],
       descriptions: [
         "Mentored 40 students on engineering mathematics problems in Excel and Python.",
         "Led lab sessions implementing numerical algorithms in C++ and Python.",
@@ -307,7 +349,16 @@ export const portfolioData = {
       company: "Informatika Unpad",
       period: "Feb 2025 - Jun 2025",
       status: "CLOSED",
-      media: noMedia,
+      media: [
+        {
+          src: `${mediaBase}/experience/unpad-arsikom-certificate.webp`,
+          alt: "Teaching assistant certificate for Computer Organization and Architecture",
+          caption: "Teaching assistant certificate, 2024/2025",
+          slot: "EXPERIENCE_VISUAL",
+          width: 1000,
+          height: 705,
+        },
+      ],
       descriptions: [
         "Assisted digital logic labs in Tinkercad and assembly programming with NASM on DOSBox.",
         "Helped grade practical assignments.",
@@ -320,6 +371,16 @@ export const portfolioData = {
       title: "Project Supervisor, Technopreneur Division",
       org: "Informatics Festival (IFEST) 2025",
       period: "Jul 2025 - Oct 2025",
+      media: [
+        {
+          src: `${mediaBase}/experience/ifest-2025-photostrip.webp`,
+          alt: "IFEST 2025 committee photo strips from The Last Act",
+          caption: "The Last Act of IFEST 2025",
+          slot: "EXPERIENCE_VISUAL",
+          width: 1000,
+          height: 1183,
+        },
+      ],
       descriptions: [
         "Directed the end-to-end concept of the Technopreneur program, launching 2 core events (workshops and competitions) that engaged over 100 participants.",
         "Secured partnerships with 11 external sponsors, generating more than Rp 25 million in funding for event operations and logistics.",
@@ -330,6 +391,16 @@ export const portfolioData = {
       title: "Head of Conceptor, Character Building Season 2025",
       org: "Himatif FMIPA Unpad",
       period: "Aug 2025 - Oct 2025",
+      media: [
+        {
+          src: `${mediaBase}/experience/cbs-2025-conceptor-team.webp`,
+          alt: "Character Building Season 2025 conceptor team",
+          caption: "With the CBS 2025 conceptor team",
+          slot: "EXPERIENCE_VISUAL",
+          width: 768,
+          height: 784,
+        },
+      ],
       descriptions: [
         "Led a cross-functional team of 18 members to design the event concept and schedule, keeping the project 100% on schedule.",
         "Coordinated with the Public Relations team to bring in 10+ industry speakers and alumni, with 100+ students attending.",
