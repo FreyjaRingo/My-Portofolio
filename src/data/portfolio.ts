@@ -183,7 +183,24 @@ export const portfolioData = {
       company: "Maybank Indonesia",
       period: "Aug 2025 - Jan 2026",
       status: "CLOSED",
-      media: noMedia,
+      media: [
+        {
+          src: `${mediaBase}/experience/maybank-ambassador-roar-up-team.webp`,
+          alt: "Maybank Student Ambassador team at the ROAR Up Your Future workshop",
+          caption: "ROAR Up Your Future, with the committee",
+          slot: "EXPERIENCE_VISUAL",
+          width: 1000,
+          height: 867,
+        },
+        {
+          src: `${mediaBase}/experience/maybank-ambassador-roar-up-zoom.webp`,
+          alt: "Online session of the ROAR Up Your Future career workshop",
+          caption: "ROAR Up online session",
+          slot: "EXPERIENCE_VISUAL",
+          width: 1000,
+          height: 589,
+        },
+      ],
       descriptions: [
         "Ran a career preparation workshop for 30+ students end to end, from concept and speaker sourcing to delivery.",
         "Partnered with Writeyuk and Maybank speakers on sessions covering CVs, portfolios, and work ethics.",
@@ -195,7 +212,24 @@ export const portfolioData = {
       company: "Monee (SeaBank & ShopeePay)",
       period: "Sep 2025 - Jan 2026",
       status: "CLOSED",
-      media: noMedia,
+      media: [
+        {
+          src: `${mediaBase}/experience/spark-awarding-night-certificates.webp`,
+          alt: "SPARK Class of 2025 ambassadors holding certificates at SeaBank",
+          caption: "SPARK Awarding Night, certificate of participation",
+          slot: "EXPERIENCE_VISUAL",
+          width: 579,
+          height: 1028,
+        },
+        {
+          src: `${mediaBase}/experience/spark-awarding-night-stage.webp`,
+          alt: "SPARK Class of 2025 Awarding Night stage",
+          caption: "SPARK Class of 2025 Awarding Night",
+          slot: "EXPERIENCE_VISUAL",
+          width: 579,
+          height: 1028,
+        },
+      ],
       descriptions: [
         "Ran financial literacy campaigns on campus focused on SeaBank and ShopeePay adoption.",
         "Worked with the SeaMoney team on social media and campus activations.",
